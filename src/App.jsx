@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import Home from "./pages/Home";
+import Home from "./pages/home";
 import Team from "./pages/team";
 import News from "./pages/News"; // <-- Я поправил имя файла на заглавную букву, так принято
 import Projects from "./pages/Projects"; // <-- 1. ИМПОРТИРУЙ PROJECTS
