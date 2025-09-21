@@ -1,0 +1,100 @@
+/* src/styles/News.css */
+
+/* --- ОБЩИЙ КОНТЕЙНЕР И ЗАГОЛОВКИ (остаются почти без изменений) --- */
+.page-container {
+    padding: 50px 20px;
+    background-color: #f8f9fa; /* Сделаем фон чуть темнее для контраста */
+}
+
+.news-content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.news-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.news-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 50px;
+}
+.highlight-text {
+    color: #3a7bd5;
+}
+
+
+/* === НОВЫЙ ДИЗАЙН КАРТОЧЕК === */
+
+.news-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    text-align: left;
+}
+
+.article-card {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px; /* Скругление углов */
+    border-left: 4px solid #3a7bd5; /* <<< ТА САМАЯ СИНЯЯ РАМКА */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Мягкая тень */
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Плавный переход для анимации */
+}
+
+/* Эффект при наведении */
+.article-card:hover {
+    transform: translateY(-8px); /* Карточка "приподнимается" */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Тень становится заметнее */
+}
+
+/* Новая обертка для иконки */
+.article-icon-wrapper {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Делаем круглой */
+    background-color: #eaf2ff; /* Светло-голубой фон */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px; /* Отступ снизу */
+}
+.article-icon-wrapper img {
+    width: 24px;
+    height: 24px;
+}
+
+/* Мы убрали .article-title, так как иконка теперь отдельно */
+.article-card h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #1a202c; /* Более темный цвет для заголовка */
+}
+
+.article-description {
+    color: #555;
+    line-height: 1.7;
+    flex-grow: 1;
+}
+
+.read-more-link {
+    margin-top: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    color: #3a7bd5;
+    display: inline-block; /* Чтобы работал отступ */
+}
+
+
+/* --- АДАПТИВНОСТЬ --- */
+@media (max-width: 768px) {
+  .news-grid {
+    grid-template-columns: 1fr;
+  }
+}

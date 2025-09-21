@@ -1,0 +1,27 @@
+/* src/styles/About.css - ПОЛНАЯ ИСПРАВЛЕННАЯ ВЕРСИЯ */
+.about-page { background-color: #fff; }
+.about-hero { padding: 60px 20px; text-align: center; background-color: #f8f9fa; border-bottom: 1px solid #e0e0e0; }
+.about-hero h1 { font-size: 3rem; font-weight: 600; }
+.about-hero p { font-size: 1.2rem; color: #666; max-width: 700px; margin: 10px auto 0 auto; }
+
+/* ВОТ ОН, ГЛАВНЫЙ ФИКС. ЗДЕСЬ БОЛЬШЕ НЕТ FLEX */
+.page-content-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.about-section { margin-bottom: 50px; }
+.about-section h2 { font-size: 2.2rem; font-weight: 600; border-bottom: 3px solid #3a7bd5; padding-bottom: 10px; margin-bottom: 20px; }
+.about-section h3 { font-size: 1.5rem; font-weight: 600; color: #333; }
+.about-section p, .about-section li { font-size: 1.1rem; line-height: 1.8; color: #444; }
+.about-section ul { list-style-position: outside; padding-left: 20px; }
+.values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+.value-card { background-color: #f8f9fa; padding: 25px; border-radius: 8px; text-align: center; }
+.value-icon { font-size: 2.5rem; }
+.partners-section { max-width: 100%; }
+.partners-slider { padding: 20px 0; }
+.partner-slide { padding: 15px; }
+.partner-slide img { max-width: 150px; margin: 0 auto; filter: grayscale(100%); opacity: .6; transition: all .3s ease; }
+.partner-slide img:hover { filter: grayscale(0%); opacity: 1; transform: scale(1.1); }
+.slick-dots li button:before { font-size: 12px; color: #3a7bd5; }

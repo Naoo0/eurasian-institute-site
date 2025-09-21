@@ -1,0 +1,109 @@
+/* src/styles/Careers.css */
+
+.careers-page {
+    background-color: #fff;
+}
+
+.careers-hero {
+    padding: 60px 20px;
+    text-align: center;
+    background: url('https://pedagog-kz.kz/storage/images/yMZOwJQ2LD.jpg') center/cover no-repeat; /* Фоновое изображение для атмосферы (замени на свое) */
+    background-color: #f8f9fa;
+}
+.careers-hero h1 { font-size: 3rem; font-weight: 600; }
+.careers-hero p { font-size: 1.2rem; color: #666; max-width: 700px; margin: 10px auto 0 auto; }
+
+.page-content-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.careers-section {
+    margin-bottom: 60px;
+    text-align: center;
+}
+.careers-section h2 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-bottom: 40px;
+}
+
+/* Секция "Преимущества" */
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    text-align: center;
+}
+.benefit-card { background-color: #f8f9fa; padding: 30px; border-radius: 8px; }
+.benefit-icon { font-size: 2.5rem; color: #3a7bd5; margin-bottom: 15px; }
+.benefit-card h3 { font-size: 1.4rem; margin-bottom: 10px; }
+.benefit-card p { color: #555; line-height: 1.6; }
+
+/* --- СТИЛИ ДЛЯ КАРТОЧЕК ВАКАНСИЙ --- */
+.vacancies-list {
+    display: grid;
+    gap: 30px;
+}
+.vacancy-card {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.07);
+    text-align: left;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.vacancy-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 35px rgba(0,0,0,0.1);
+}
+
+.vacancy-image img {
+    width: 150px;
+    height: 150px;
+    border-radius: 8px;
+    object-fit: cover; /* Важнейшее свойство, чтобы фото не искажалось */
+}
+
+.vacancy-details {
+    flex: 1; /* Занимает все оставшееся место */
+}
+.vacancy-details h3 { font-size: 1.5rem; margin: 0 0 5px 0; }
+.vacancy-details .department { font-style: italic; color: #666; margin-bottom: 15px; }
+.vacancy-details .description { line-height: 1.6; margin-bottom: 20px; }
+
+.apply-button {
+    background-color: #3a7bd5;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+.apply-button:hover {
+    background-color: #2a5a9d;
+}
+
+/* Секция "Нет подходящей вакансии?" */
+.spontaneous-application {
+    background-color: #f8f9fa;
+    padding: 40px;
+    border-radius: 8px;
+}
+
+/* Адаптивность для карточек */
+@media (max-width: 768px) {
+    .vacancy-card {
+        flex-direction: column; /* Картинка встает над текстом */
+        text-align: center;
+    }
+    .vacancy-image img {
+        width: 100%;
+        height: 200px; /* Делаем картинку шире на мобильных */
+    }
+}

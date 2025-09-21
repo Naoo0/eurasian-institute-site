@@ -1,0 +1,74 @@
+/* src/styles/Partnership.css */
+
+/* ... (здесь идут стили для .partnership-hero, которые я не буду повторять) ... */
+
+/* 
+  --- ВОТ ГЛАВНОЕ ИСПРАВЛЕНИЕ ---
+  Этот код говорит главному контейнеру и его дочерним секциям, как себя вести.
+*/
+.page-content-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    /* Убеждаемся, что здесь НЕТ display: flex или grid */
+}
+
+/* ЗАСТАВЛЯЕМ КАЖДУЮ СЕКЦИЮ БЫТЬ БЛОКОМ И ИДТИ ДРУГ ПОД ДРУГОМ */
+.partnership-section {
+    display: block !important; /* Говорим: "Будь блоком, и мне плевать на другие стили" */
+    margin-bottom: 60px;
+    text-align: center;
+}
+
+/* --- Остальной код для страницы --- */
+
+.partnership-section h2 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+/* Секция "Почему с нами выгодно" */
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    text-align: center;
+}
+
+/* ... (остальные стили для карточек, списков, слайдера и кнопки CTA) ... */
+
+
+
+/* src/styles/Partnership.css */
+
+.partnership-page { background-color: #fff; }
+.partnership-hero { padding: 60px 20px; text-align: center; background-color: #f8f9fa; border-bottom: 1px solid #e0e0e0; }
+.partnership-hero h1 { font-size: 3rem; font-weight: 600; }
+.partnership-hero p { font-size: 1.2rem; color: #666; max-width: 700px; margin: 10px auto 0 auto; }
+
+.page-content-wrapper { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+
+.partnership-section {
+    display: block !important; /* ГЛАВНОЕ ИСПРАВЛЕНИЕ */
+    margin-bottom: 60px;
+    text-align: center;
+}
+
+.partnership-section h2 { font-size: 2.2rem; font-weight: 600; margin-bottom: 30px; }
+.benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; text-align: center; }
+.benefit-card { background-color: #f8f9fa; padding: 30px; border-radius: 8px; border-bottom: 3px solid #3a7bd5; }
+.benefit-icon { font-size: 2.5rem; color: #3a7bd5; margin-bottom: 15px; }
+.benefit-card h3 { font-size: 1.4rem; margin-bottom: 10px; }
+.benefit-card p { color: #555; line-height: 1.6; }
+.cooperation-list { list-style-type: '✓'; padding-left: 25px; text-align: left; max-width: 800px; margin: 0 auto; }
+.cooperation-list li { padding-left: 15px; margin-bottom: 15px; font-size: 1.1rem; color: #444; }
+.partners-section { background-color: #f8f9fa; padding: 40px; border-radius: 8px; }
+.partners-slider { padding: 20px 0; }
+.partner-slide img { max-width: 150px; margin: 0 auto; filter: grayscale(100%); opacity: 0.6; transition: all 0.3s ease; }
+.partner-slide img:hover { filter: grayscale(0%); opacity: 1; }
+.cta-section { background-color: #3a7bd5; color: white; padding: 50px 30px; border-radius: 8px; }
+.cta-section h2 { color: white; }
+.cta-section p { font-size: 1.1rem; max-width: 600px; margin: 0 auto 30px auto; }
+.cta-button { background-color: #fff; color: #3a7bd5; padding: 15px 35px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.1rem; transition: all 0.2s ease; }
+.cta-button:hover { background-color: #f0f0f0; transform: translateY(-2px); }

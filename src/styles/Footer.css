@@ -1,0 +1,111 @@
+/* src/styles/Footer.css */
+
+.site-footer {
+  font-family: sans-serif;
+}
+
+/* --- Стили для верхней (светлой) части --- */
+.footer-upper {
+  background-color: #f0f0f0;
+  padding: 40px 30px;
+  position: relative; /* Нужно для позиционирования кнопки "вверх" */
+}
+
+.footer-container {
+  max-width: 100%;
+  margin: 0 auto; /* Центрируем контейнер */
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.footer-info h3 {
+  font-family: serif;
+  font-size: 1.5rem;
+  margin: 0 0 20px 0;
+}
+
+.social-follow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #555;
+}
+.social-follow a {
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.quick-links h4 {
+  font-size: 1.1rem;
+  margin: 0 0 15px 0;
+}
+.quick-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.quick-links li {
+  margin-bottom: 10px;
+}
+.quick-links a {
+  text-decoration: none;
+  color: #555;
+}
+
+.back-to-top {
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  background-color: #333;
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* --- Стили для нижней (бирюзовой) части --- */
+.footer-lower {
+  background-color: #26a6ab; /* Бирюзовый цвет */
+  color: white;
+  text-align: center;
+  padding: 40px 30px;
+}
+
+.footer-lower h2 {
+  margin: 0 0 15px 0;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.footer-socials {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-size: 1.4rem;
+  margin-bottom: 30px;
+}
+.footer-socials a {
+  color: white;
+}
+
+.footer-bottom-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap; /* Позволяет переноситься на новую строку на маленьких экранах */
+}
+.footer-bottom-nav a {
+  color: white;
+  text-decoration: none;
+}

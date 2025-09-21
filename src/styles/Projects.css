@@ -1,0 +1,132 @@
+/* src/styles/Projects.css */
+
+.projects-page {
+  /* Этот класс-обертка нужен, чтобы фон был консистентным */
+}
+
+/* --- Стили для шапки (Hero) --- */
+.projects-hero {
+  background: linear-gradient(135deg, #5a9bd6, #3a7bd5);
+  color: white;
+  text-align: center;
+  padding: 80px 20px;
+}
+.projects-hero h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+}
+.projects-hero .subtitle {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+
+/* --- Стили для секций (Кейсы, Отзывы) --- */
+/* Вот важное правило, которое центрирует контент внутри страницы */
+.projects-section, .testimonials-section {
+  max-width: 1200px; /* Ограничиваем ширину контента */
+  margin: 0 auto;    /* Центрируем его */
+  padding: 60px 20px;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.section-header h2 {
+  font-size: 2.5rem;
+  margin: 0 0 10px 0;
+}
+.section-header p {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+
+/* --- СЕТКА ДЛЯ КАРТОЧЕК ПРОЕКТОВ --- */
+.projects-grid {
+  display: grid;
+  /* Создаем адаптивную сетку: колонки от 300px шириной */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.project-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  overflow: hidden; /* Чтобы картинка не вылезала за скругленные углы */
+  display: flex;
+  flex-direction: column;
+}
+.card-image {
+  position: relative;
+}
+.card-image img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.project-category {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0,0,0,0.6);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+.card-content {
+  padding: 20px;
+  flex-grow: 1;
+}
+.card-content h3 {
+  margin: 0 0 10px 0;
+}
+.card-content p {
+  color: #555;
+  line-height: 1.6;
+}
+.project-link {
+  display: inline-block;
+  margin-top: 15px;
+  text-decoration: none;
+  color: #3a7bd5;
+  font-weight: 600;
+}
+
+
+/* --- СЕТКА ДЛЯ ОТЗЫВОВ --- */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Делаем адаптивной */
+  gap: 30px;
+}
+.testimonial-card {
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+.testimonial-avatar {
+  text-align: center;
+  margin-bottom: 15px;
+}
+.testimonial-avatar img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.testimonial-content .feedback {
+  font-style: italic;
+  color: #444;
+  text-align: center;
+}
+.testimonial-content .author {
+  text-align: center;
+  font-weight: 600;
+  margin-top: 15px;
+}

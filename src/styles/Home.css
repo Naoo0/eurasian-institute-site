@@ -1,0 +1,140 @@
+.new-content-grid {
+  display: flex;
+  gap: 40px;
+  /* FIX: Добавляем отступы со всех сторон, как на макете */
+  padding: 40px 30px; 
+}
+
+/* Левая колонка (новости) */
+.main-article-content {
+  flex: 2;
+  /* FIX: Это важное правило не даст колонке растягиваться из-за большой картинки */
+  min-width: 0; 
+}
+
+/* Правая колонка (сайдбар) */
+.right-sidebar {
+  flex: 1;
+  border-left: 1px solid #e0e0e0; /* Разделительная линия */
+  padding-left: 40px;
+  min-width: 0;
+}
+
+/* --- СТИЛИ ДЛЯ БЛОКА НОВОСТЕЙ --- */
+.news-article {
+  /* Пусто, стили ниже */
+}
+
+.news-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+.news-header span {
+  font-weight: 600;
+  color: #555;
+}
+
+.news-article h2 {
+  font-size: 1.6rem; /* Чуть уменьшили для соответствия */
+  font-weight: 600;
+  margin: 0 0 20px 0;
+  line-height: 1.4;
+}
+
+/* FIX: Контейнер для картинки, чтобы можно было добавить тег "LU" */
+.image-wrapper {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.lu-tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 3px 8px;
+  font-size: 0.8rem;
+  border-radius: 4px;
+}
+
+/* FIX: Главное правило для картинки, которое теперь точно сработает */
+.news-article img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  display: block; /* Убирает лишние отступы */
+}
+
+.news-footer {
+    display: flex;
+    justify-content: space-between;
+    color: #888;
+    margin-top: 15px;
+}
+.news-footer.author {
+    font-weight: bold;
+    color: #555;
+}
+
+
+/* --- СТИЛИ ДЛЯ САЙДБАРА --- */
+.sidebar-card {
+  margin-bottom: 30px;
+}
+
+.sidebar-card .image-placeholder {
+  width: 100%;
+  height: 180px;
+  background-color: #29b6f6;
+  /* FIX: Добавляем скругление углов */
+  border-radius: 15px; 
+  margin-bottom: 15px;
+}
+
+.sidebar-card h3 {
+  margin: 0;
+  font-weight: 600;
+  text-transform: uppercase; /* Буквы заглавные */
+}
+
+.sidebar-card p {
+    margin-top: 5px;
+    color: #888;
+    font-weight: bold;
+}
+
+/* --- СТИЛИ ДЛЯ БЛОКА ПОДПИСКИ (NEWSLETTER) --- */
+.newsletter-section {
+  background-color: #f5f1e9;
+  text-align: center;
+  padding: 50px 30px;
+  margin: 20px 30px;
+  border-radius: 5px;
+}
+.newsletter-section h2 {
+  font-family: serif;
+  font-size: 2.5rem;
+  font-weight: normal;
+  margin: 0 0 10px 0;
+}
+.newsletter-section p {
+  font-size: 1.1rem;
+  color: #555;
+  max-width: 500px;
+  margin: 0 auto 25px auto;
+}
+.newsletter-section .subscribe-btn {
+  background-color: transparent;
+  border: 1px solid #333;
+  padding: 12px 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.newsletter-section .subscribe-btn:hover {
+  background-color: #333;
+  color: white;
+}
