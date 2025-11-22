@@ -1,39 +1,47 @@
 // src/components/Header.jsx
 
-import React, { useState } from 'react'; // <-- Хук для состояния
+import React, { useState } from 'react';
 import { FaTwitter, FaFacebookF, FaLinkedinIn, FaPinterestP } from "react-icons/fa";
 import { Link } from 'react-router-dom';
-import logoImage from '../assets/logo.png'; // <-- Логотип
+import logoImage from '../assets/logo.png';
 import "../styles/Header.css";
-import SubscribeModal from './SubscribeModal'; // <-- Модальное окно
+import SubscribeModal from './SubscribeModal';
 
 function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    // Используем <> чтобы вернуть два соседних элемента
     <>
       <header className="header">
         <div className="header-top">
 
-          {/* --- Левая часть (поиск) --- */}
+          {/* Левая часть (поиск) */}
           <div className="header-left">
             <input type="text" placeholder="Поиск" className="search-input" />
           </div>
 
-          {/* --- Центральная часть (ВОТ ЛОГОТИП, КОТОРЫЙ Я ВЕРНУЛ) --- */}
+          {/* Центральная часть (логотип + название) */}
           <div className="header-center">
             <Link to="/" className="logo-link">
-              <img src={logoImage} alt="Логотип Eurasian Institute" className="logo-image" />
+              <img
+                src={logoImage}
+                alt="Логотип Eurasian Institute"
+                className="logo-image"
+              />
             </Link>
-            <h2>Eurasian Institute for Interdisciplinary Studies</h2>
+            <h2 className="header-title">
+              Eurasian Institute for Interdisciplinary Studies
+            </h2>
           </div>
 
-          {/* --- Правая часть (кнопки и соцсети) --- */}
+          {/* Правая часть (кнопки и соцсети) */}
           <div className="header-right">
             <div className="actions">
               <button className="btn">Вход/Регистрация</button>
-              <button className="btn btn-yellow" onClick={() => setIsModalOpen(true)}>
+              <button
+                className="btn btn-yellow"
+                onClick={() => setIsModalOpen(true)}
+              >
                 Подписаться
               </button>
             </div>
@@ -44,12 +52,14 @@ function Header() {
               <a href="#"><FaPinterestP /></a>
             </div>
           </div>
-          
+
         </div>
       </header>
 
-      {/* Модальное окно, которое вызывается по кнопке */}
-      <SubscribeModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <SubscribeModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </>
   );
 }
