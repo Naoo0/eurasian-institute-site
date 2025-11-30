@@ -32,12 +32,7 @@ function TeamMemberCard({ member }) {
           </p>
         )}
 
-        {member.bio && (
-          <div className="info-block">
-            <h4>Биография</h4>
-            <p>{member.bio}</p>
-          </div>
-        )}
+
 
         {member.interests && (
           <div className="info-block">

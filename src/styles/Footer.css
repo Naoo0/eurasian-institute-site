@@ -2,43 +2,50 @@
 
 .site-footer {
   font-family: sans-serif;
+  background-color: #f5e7d3; /* общий бежевый фон */
+  margin: 0;
+  padding: 0;
 }
 
-/* --- Стили для верхней (светлой) части --- */
-.footer-upper {
-  background-color: #f0f0f0;
-  padding: 40px 30px;
-  position: relative; /* Нужно для позиционирования кнопки "вверх" */
+/* общий контейнер футера */
+.footer-main {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px 30px 32px;  /* БЫЛО 40px 30px 60px */
+  position: relative;
+  box-sizing: border-box;
 }
 
-.footer-container {
-  max-width: 100%;
-  margin: 0 auto; /* Центрируем контейнер */
+/* верхний ряд: инфа + quick links */
+.footer-top-row {
   display: flex;
   justify-content: space-between;
-  gap: 40px;
+  gap: 24px;           /* было 40px */
+  margin-bottom: 20px; /* было 40px */
 }
 
 .footer-info h3 {
   font-family: serif;
-  font-size: 1.5rem;
-  margin: 0 0 20px 0;
+  font-size: 1.4rem;   /* чуть меньше */
+  margin: 0 0 12px 0;  /* было 20px */
 }
 
+/* текст/иконки на бежевом */
 .social-follow {
   display: flex;
   align-items: center;
-  gap: 10px;
-  color: #555;
+  gap: 8px;
+  color: #333;
 }
 .social-follow a {
   color: #333;
-  font-size: 1.5rem;
+  font-size: 1.3rem;   /* было 1.5rem */
 }
 
 .quick-links h4 {
-  font-size: 1.1rem;
-  margin: 0 0 15px 0;
+  font-size: 1rem;
+  margin: 0 0 10px 0;
 }
 .quick-links ul {
   list-style: none;
@@ -46,54 +53,39 @@
   margin: 0;
 }
 .quick-links li {
-  margin-bottom: 10px;
+  margin-bottom: 6px;  /* было 10px */
 }
 .quick-links a {
   text-decoration: none;
-  color: #555;
+  color: #333;
 }
 
-.back-to-top {
-  position: absolute;
-  bottom: 20px;
-  right: 30px;
-  background-color: #333;
-  color: white;
-  border: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1.2rem;
+/* нижний ряд: лого + навигация */
+.footer-bottom-row {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  gap: 12px;                          /* было 20px */
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  padding-top: 12px;                  /* было 20px */
 }
 
-
-/* --- Стили для нижней (бирюзовой) части --- */
-.footer-lower {
-  background-color: #26a6ab; /* Бирюзовый цвет */
-  color: white;
-  text-align: center;
-  padding: 40px 30px;
-}
-
-.footer-lower h2 {
-  margin: 0 0 15px 0;
-  font-size: 2rem;
+.footer-brand h2 {
+  margin: 0 0 6px 0;                  /* было 10px */
+  font-size: 1.6rem;                  /* было 2rem */
   font-weight: bold;
+  text-align: center;
 }
 
 .footer-socials {
   display: flex;
   justify-content: center;
-  gap: 20px;
-  font-size: 1.4rem;
-  margin-bottom: 30px;
+  gap: 16px;                           /* было 20px */
+  font-size: 1.2rem;                   /* было 1.4rem */
+  margin-bottom: 6px;                  /* было 10px */
 }
 .footer-socials a {
-  color: white;
+  color: #333;
 }
 
 .footer-bottom-nav ul {
@@ -102,10 +94,41 @@
   margin: 0;
   display: flex;
   justify-content: center;
-  gap: 25px;
-  flex-wrap: wrap; /* Позволяет переноситься на новую строку на маленьких экранах */
+  gap: 18px;                           /* было 25px */
+  flex-wrap: wrap;
 }
 .footer-bottom-nav a {
-  color: white;
+  color: #333;
   text-decoration: none;
+}
+
+/* кнопка вверх */
+.back-to-top {
+  position: absolute;
+  bottom: 16px;                        /* было 20px */
+  right: 24px;                         /* было 30px */
+  background-color: #333;
+  color: white;
+  border: none;
+  width: 34px;                         /* было 40px */
+  height: 34px;                        /* было 40px */
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;                     /* было 1.2rem */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* адаптация на узких экранах */
+@media (max-width: 768px) {
+  .footer-top-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .footer-main {
+    padding: 20px 20px 30px;
+  }
 }

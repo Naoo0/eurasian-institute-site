@@ -108,29 +108,31 @@
 
 /* --- СТИЛИ ДЛЯ БЛОКА ПОДПИСКИ (NEWSLETTER) --- */
 .newsletter-section {
-  background-color: #f5f1e9;
+  background-color: #f5e7d3;     /* такой же бежевый, как у футера */
   text-align: center;
-  padding: 50px 30px;
-  margin: 20px 30px;
-  border-radius: 5px;
+  padding: 24px 0 28px;          /* БЫЛО 50px 0 60px — сильно меньше высота */
+  margin: 0;
+  border-radius: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 .newsletter-section h2 {
   font-family: serif;
-  font-size: 2.5rem;
+  font-size: 2rem;               /* было 2.5rem */
   font-weight: normal;
-  margin: 0 0 10px 0;
+  margin: 0 0 8px 0;             /* было 0 0 10px */
 }
 .newsletter-section p {
-  font-size: 1.1rem;
+  font-size: 1rem;               /* чуть меньше текст */
   color: #555;
   max-width: 500px;
-  margin: 0 auto 25px auto;
+  margin: 0 auto 16px auto;      /* было 25px */
 }
 .newsletter-section .subscribe-btn {
   background-color: transparent;
   border: 1px solid #333;
-  padding: 12px 25px;
-  font-size: 1rem;
+  padding: 8px 20px;             /* компактнее кнопка */
+  font-size: 0.95rem;
   cursor: pointer;
   transition: all 0.2s;
 }

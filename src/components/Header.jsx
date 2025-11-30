@@ -15,13 +15,8 @@ function Header() {
       <header className="header">
         <div className="header-top">
 
-          {/* Левая часть (поиск) */}
+          {/* Левая часть: только логотип */}
           <div className="header-left">
-            <input type="text" placeholder="Поиск" className="search-input" />
-          </div>
-
-          {/* Центральная часть (логотип + название) */}
-          <div className="header-center">
             <Link to="/" className="logo-link">
               <img
                 src={logoImage}
@@ -29,15 +24,18 @@ function Header() {
                 className="logo-image"
               />
             </Link>
-            <h2 className="header-title">
-              Eurasian Institute for Interdisciplinary Studies
-            </h2>
           </div>
 
-          {/* Правая часть (кнопки и соцсети) */}
+          {/* Центральная часть: большая надпись */}
+          <div className="header-center">
+            <h1 className="header-title">
+              Eurasian Institute for Interdisciplinary Studies
+            </h1>
+          </div>
+
+          {/* Правая часть: кнопка и соцсети */}
           <div className="header-right">
             <div className="actions">
-              <button className="btn">Вход/Регистрация</button>
               <button
                 className="btn btn-yellow"
                 onClick={() => setIsModalOpen(true)}

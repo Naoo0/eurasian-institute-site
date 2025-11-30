@@ -1,70 +1,142 @@
-// src/pages/News.jsx
+// src/pages/Partnership.jsx
 
-import React from "react";
-import { motion } from "framer-motion";
-import "../styles/News.css";
+import React from 'react';
+import { FaFlask, FaGlobe, FaLightbulb } from 'react-icons/fa';
+import "../styles/Partnership.css";
 
-const articles = [
-  {
-    title: "Развитие цифровых компетенций студентов",
-    description:
-      "Как новые курсы по информатике и ИКТ помогают студентам уверенно работать с данными, онлайн-сервисами и современными платформами.",
-    link: "#",
-    icon: "https://wazuh.com/wp-content/themes/wazuh-v3/assets/images/partners/strong-together-icon.png",
-  },
-  {
-    title: "Лаборатория для обучения",
-    description:
-      "Практические занятия на стендах, моделирование процессов и работа с реальными инструментами в рамках учебного процесса.",
-    link: "#",
-    icon: "https://wazuh.com/wp-content/themes/wazuh-v3/assets/images/partners/increase-margin-icon.png",
-  },
-  {
-    title: "Онлайн-сервисы университета: от расписания до портфолио",
-    description:
-      "Обновлённый личный кабинет студента, электронное расписание, цифровое портфолио и другие сервисы, упрощающие учебный процесс.",
-    link: "#",
-    icon: "https://wazuh.com/wp-content/themes/wazuh-v3/assets/images/partners/expand-your-business-icon.png",
-  },
-  {
-    title: "Информатика как основа будущей профессии",
-    description:
-      "Почему базовые навыки программирования, работы с информацией и безопасностью в сети важны для студентов любых специальностей.",
-    link: "#",
-    icon: "https://wazuh.com/wp-content/themes/wazuh-v3/assets/images/partners/flexible-software-icon.png",
-  },
-];
-
-const News = () => {
+const Partnership = () => {
   return (
-    <div className="page-container">
-      <div className="news-content-wrapper">
-        <h2 className="news-title">
-          Последние <span className="highlight-text">новости и статьи</span>
-        </h2>
-        <p className="news-subtitle">
-          Материалы об образовательных проектах, цифровой среде и развитии студентов нашего университета
+    <div className="partnership-page">
+      <header className="partnership-hero">
+        <h1>Партнёрство и сотрудничество</h1>
+        <p>
+          ЕИМИ предлагает партнёрам доступ к глобальной сети знаний, международному опыту
+          и междисциплинарной экспертизе для решения сложных социальных,
+          экономических и технологических задач.
         </p>
+      </header>
 
-        <div className="news-grid">
-          {articles.map((article, index) => (
-            <div key={index} className="article-card">
-              <div className="article-title">
-                <div className="article-icon-wrapper">
-                  <img src={article.icon} alt="" />
-                </div>
-                <h3>{article.title}</h3>
+      <div className="page-content-wrapper">
+        {/* Почему стоит сотрудничать с нами */}
+        <section className="partnership-section">
+          <h2>Почему стоит сотрудничать с нами?</h2>
+          <p className="partnership-lead">
+            ЕИМИ предлагает нашим партнёрам не просто участие в проектах, а доступ к глобальной
+            сети знаний, подтверждённую международным опытом и уникальную экспертизу, необходимую
+            для решения самых сложных задач.
+          </p>
+
+          <div className="benefits-grid">
+            {/* 1. Международный статус и глобальная сеть */}
+            <div className="benefit-card">
+              <div className="benefit-icon">
+                <FaGlobe />
               </div>
-              <p className="article-description">{article.description}</p>
-              <a href={article.link} className="read-more-link">
-                Читать далее →
-              </a>
+              <h3>1. Международный статус и доступ к глобальной сети</h3>
+              <p>
+                Сотрудничество ЕИМИ с Европейским Союзом, в частности по линии программы
+                <strong> Marie Skłodowska-Curie Actions (MSCA Staff Exchange)</strong>, подтверждает
+                нашу надёжность и высокий научный уровень.
+              </p>
+              <ul>
+                <li>
+                  <strong>Ведущие мировые институты.</strong> Мы состоим в консорциумах с Лундским
+                  университетом (Швеция) и другими европейскими научными центрами.
+                </li>
+                <li>
+                  <strong>Трансфер знаний.</strong> Участие в программе обмена персоналом MSCA
+                  гарантирует постоянный обмен передовыми методологиями и знаниями с лучшими
+                  мировыми экспертами.
+                </li>
+              </ul>
             </div>
-          ))}
-        </div>
+
+            {/* 2. Уникальная междисциплинарная экспертиза */}
+            <div className="benefit-card">
+              <div className="benefit-icon">
+                <FaFlask />
+              </div>
+              <h3>2. Уникальная междисциплинарная экспертиза</h3>
+              <p>
+                Партнёрская деятельность ЕИМИ охватывает критически важные и разнородные сферы,
+                что позволяет эффективно работать на стыке социальных, технологических
+                и управленческих наук.
+              </p>
+              <ul>
+                <li>
+                  <strong>Социальные и управленческие инновации.</strong> Через проект{" "}
+                  <strong>MOCCA</strong> ЕИМИ вносит вклад в изучение коррупции и повышение
+                  эффективности управления, а через <strong>MARS</strong> – в разработку гуманной
+                  миграционной политики.
+                </li>
+                <li>
+                  <strong>Технологическое превосходство.</strong> Проект{" "}
+                  <strong>POLKA</strong> демонстрирует приверженность чистым технологиям и
+                  инновациям, фокусируясь на разработке низкоэмиссионных решений, включая
+                  водородные технологии.
+                </li>
+              </ul>
+            </div>
+
+            {/* 3. Влияние на политику и реальные результаты */}
+            <div className="benefit-card">
+              <div className="benefit-icon">
+                <FaLightbulb />
+              </div>
+              <h3>3. Влияние на политику и реальные результаты</h3>
+              <p>
+                Мы не просто исследуем — мы превращаем знания в практические рекомендации
+                и решения, влияющие на политику и управление.
+              </p>
+              <ul>
+                <li>
+                  <strong>Стратегические рекомендации.</strong> Совместные результаты используются
+                  для формирования политики на международном уровне, включая рекомендации для
+                  правительств и глобальных организаций.
+                </li>
+                <li>
+                  <strong>Приверженность устойчивому развитию.</strong> Участие в проектах,
+                  нацеленных на чистую энергетику (<strong>POLKA</strong>) и добросовестное
+                  управление (<strong>MOCCA</strong>), делает ЕИМИ идеальным партнёром для
+                  организаций, ориентированных на цели устойчивого развития и ESG-повестку.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Направления сотрудничества */}
+        <section className="partnership-section">
+          <h2>Направления сотрудничества</h2>
+          <ul className="cooperation-list">
+            <li>Проведение совместных фундаментальных и прикладных исследований.</li>
+            <li>Разработка и коммерциализация инновационных продуктов и технологий.</li>
+            <li>
+              Организация стажировок и образовательных программ для студентов и специалистов.
+            </li>
+            <li>Проведение совместных конференций, семинаров и круглых столов.</li>
+            <li>
+              Выполнение контрактных исследовательских проектов по заказу индустриальных
+              партнёров.
+            </li>
+          </ul>
+        </section>
+
+        {/* Призыв к действию */}
+        <section className="partnership-section cta-section">
+          <h2>Станьте нашим партнёром</h2>
+          <p>
+            Мы открыты к сотрудничеству с университетами, исследовательскими центрами,
+            международными организациями и индустриальными партнёрами. Если вы заинтересованы
+            в совместных проектах, пожалуйста, свяжитесь с нами.
+          </p>
+          <a href="/contacts" className="cta-button">
+            Связаться с нами
+          </a>
+        </section>
       </div>
     </div>
   );
 };
 
-export default News;
+export default Partnership;

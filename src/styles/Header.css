@@ -8,42 +8,24 @@
 
 /* Вся верхняя полоса шапки */
 .header-top {
-  /* убираем max-width, чтобы тянуться на всю ширину */
   width: 100%;
   padding: 12px 40px;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* левый блок у левого края, правый у правого */
+  justify-content: space-between;
   gap: 24px;
+  box-sizing: border-box;
+
+  /* важно для абсолютного центрирования заголовка */
+  position: relative;
 }
 
-/* ЛЕВЫЙ БЛОК: поиск всегда слева */
+/* ЛЕВЫЙ БЛОК: только логотип */
 .header-left {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  flex: 0 0 auto; /* не растягиваем */
-}
-
-.search-input {
-  width: 260px;
-  max-width: 100%;
-  padding: 10px 16px;
-  border-radius: 999px;
-  border: none;
-  outline: none;
-  font-size: 0.9rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-}
-
-/* ЦЕНТР: лого + название, центрируются в оставшемся пространстве */
-.header-center {
-  flex: 1 1 auto;  /* центр растягивается */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 6px;
+  flex: 0 1 auto;
 }
 
 .logo-link {
@@ -53,25 +35,36 @@
 }
 
 .logo-image {
-  height: 70px;
+  height: 60px;
   width: auto;
   display: block;
   object-fit: contain;
 }
 
-.header-title {
-  margin: 0;
-  font-size: 1.05rem;
-  font-weight: 600;
+/* ЦЕНТР: большая надпись — ЖЁСТКО по центру экрана */
+.header-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);  /* геометрический центр */
+  text-align: center;
+  pointer-events: none;               /* чтобы клики не мешали левому/правому блоку */
 }
 
-/* ПРАВЫЙ БЛОК: кнопки + соцсети у правого края */
+.header-title {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* ПРАВЫЙ БЛОК: кнопка + соцсети у правого края */
 .header-right {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 18px;
-  flex: 0 0 auto; /* не растягиваем */
+  flex: 0 1 auto;
 }
 
 .actions {
@@ -119,35 +112,47 @@
   text-decoration: none;
 }
 
-/* Адаптив: на узких экранах стекаем блоки */
+/* Адаптив: на узких экранах убираем абсолютное позиционирование */
 @media (max-width: 900px) {
   .header-top {
     flex-direction: column;
     align-items: center;
     padding: 12px 20px;
+    position: static;              /* заголовок снова в потоке */
   }
 
-  .header-left,
-  .header-right {
+  .header-center {
+    position: static;
+    transform: none;
+    pointer-events: auto;
+    margin-top: 6px;
+  }
+
+  .header-left {
     justify-content: center;
   }
 
   .header-right {
     flex-direction: column;
     gap: 10px;
+    justify-content: center;
   }
 
   .actions {
     justify-content: center;
   }
+
+  .header-title {
+    font-size: 1.3rem;
+  }
 }
 
 @media (max-width: 600px) {
   .logo-image {
-    height: 56px;
+    height: 50px;
   }
 
   .header-title {
-    font-size: 0.9rem;
+    font-size: 1.1rem;
   }
 }

@@ -13,11 +13,9 @@ function Navbar() {
         {/* ^^^^^^^^^^^^^^^^^^^^
            `to="/projects"` здесь должно точно совпадать с `path="/projects"` в App.jsx
         */}
-        <li><Link to="/team">Команда</Link></li>
+        <li><Link to="/team">Исследовательская группа</Link></li>
         <li><Link to="/news">Новости и события</Link></li>
-        <li><Link to="/publications">Публикации</Link></li>
         <li><Link to="/partnership">Партнёрство и сотрудничество</Link></li>
-        <li><Link to="/careers">Карьера и вакансии</Link></li>
         <li><Link to="/contacts">Контакты</Link></li>
       </ul>
     </nav>
