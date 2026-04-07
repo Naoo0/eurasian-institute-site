@@ -21,9 +21,7 @@
 }
 
 /* --- СТИЛИ ДЛЯ БЛОКА НОВОСТЕЙ --- */
-.news-article {
-  /* Пусто, стили ниже */
-}
+
 
 .news-header {
   display: flex;
@@ -117,7 +115,7 @@
   box-sizing: border-box;
 }
 .newsletter-section h2 {
-  font-family: serif;
+  font-family: "Georgia", "Times New Roman", Times, serif;
   font-size: 2rem;               /* было 2.5rem */
   font-weight: normal;
   margin: 0 0 8px 0;             /* было 0 0 10px */

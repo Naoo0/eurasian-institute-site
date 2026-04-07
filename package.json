@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@portabletext/react": "^5.0.0",
+    "@sanity/client": "^7.13.1",
+    "@sanity/image-url": "^2.0.2",
     "framer-motion": "^12.23.12",
     "i18next": "^25.5.2",
     "nodemailer": "^7.0.10",

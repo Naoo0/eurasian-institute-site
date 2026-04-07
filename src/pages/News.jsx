@@ -1,14 +1,32 @@
 // src/pages/News.jsx
-
-import React from "react";
-import { motion } from "framer-motion";
-import "../styles/News.css";
-import placeholderImage from "../assets/placeholder.png";
-import news2 from "../assets/news2.png";
-import news1 from "../assets/news1.png";
-
+import { useEffect, useState } from 'react';
+import { PortableText } from '@portabletext/react';
+import { client, urlFor } from '../sanityClient';
+import '../styles/News.css';
 
 const News = () => {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    client
+      .fetch(
+        `*[_type == "newsItem"] | order(date desc){
+          _id,
+          title,
+          date,
+          tag,
+          image,
+          body
+        }`
+      )
+      .then(setItems)
+      .catch(console.error);
+  }, []);
+
+  if (!items.length) {
+    return null;
+  }
+
   return (
     <div className="page-container">
       <div className="news-header">
@@ -20,222 +38,47 @@ const News = () => {
       </div>
 
       <div className="news-list">
-        {/* НОВОСТЬ 1 */}
-        <motion.article
-          className="news-item"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6 }}
-        >
-          <div className="news-image-wrapper">
-            {/* здесь потом можно заменить placeholderImage на реальное фото конференции */}
-            <img
-              src={news1}
-              alt="Конференция MOCCA в Швеции"
-              className="news-image"
-            />
-          </div>
-          
-          
+        {items.map((item, index) => {
+          const formattedDate = item.date
+            ? new Date(item.date).toLocaleDateString('ru-RU', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })
+            : '';
 
-          <div className="news-content">
-            <div className="news-meta">
-              <span className="news-tag">MOCCA Project</span>
-              <span className="news-date">4–8 мая, Швеция</span>
-            </div>
-            <h2 className="news-item-title">
-              Конференция MOCCA: Анализ коррупции и управления в Центральной
-              Азии
-            </h2>
+          return (
+            <article
+              key={item._id}
+              className={`news-item ${index % 2 === 1 ? 'news-item--reverse' : ''}`}
+            >
+              <div className="news-image-wrapper">
+                {item.image ? (
+                  <img
+                    src={urlFor(item.image).width(1200).url()} // ВАЖНО: БЕЗ .height(...)
+                    alt={item.title}
+                    className="news-image"
+                  />
+                ) : (
+                  <div className="news-image-placeholder" />
+                )}
+              </div>
 
-            <div className="news-item-body">
-              <p>
-                С 4 по 8 мая в Швеции успешно прошла Промежуточная конференция
-                (Mid-Term Conference) международного исследовательского проекта{" "}
-                <strong>MOCCA (Multilevel Orders of Corruption in Central Asia)</strong>.
-                Конференция стала ключевым событием, объединившим исследователей,
-                экспертов и представителей партнерских организаций, включая ЕИМИ,
-                для обсуждения текущих результатов проекта и планирования
-                дальнейших этапов работы.
-              </p>
+              <div className="news-content">
+                <div className="news-meta">
+                  {item.tag && <span className="news-tag">{item.tag}</span>}
+                  {formattedDate && <span className="news-date">{formattedDate}</span>}
+                </div>
 
-              <p>
-                Представители ЕИМИ активно участвовали в работе сессий, представляя
-                уникальную региональную экспертизу и данные, собранные в рамках
-                проекта. С докладами от нашей организации выступили:
-              </p>
+                <h2 className="news-item-title">{item.title}</h2>
 
-              <ul>
-                <li>
-                  <strong>Дания Нурмуханкызы</strong>, исследователь ЕИМИ –
-                  представила доклад, основанный на результатах полевых
-                  исследований в Казахстане.
-                </li>
-                <li>
-                  <strong>Динара Рахматуллаева</strong> и{" "}
-                  <strong>Данияр Калдияров</strong>, исследователи ЕИМИ –
-                  поделились экспертными экономическими оценками и анализом в
-                  рамках проектных исследований.
-                </li>
-                <li>
-                  <strong>Ишкибаева Мадина Маратовна</strong>, исследователь ЕИМИ
-                  – выступила с докладом на тему{" "}
-                  <em>
-                    &quot;Legal consciousness: case of Kazakhstan&quot;
-                    (&quot;Правосознание: кейс Казахстана&quot;)
-                  </em>, внесла важный вклад в обсуждение правовых культур в
-                  Центральной Азии.
-                </li>
-              </ul>
-
-              <p>
-                Мероприятие было посвящено всестороннему анализу многоуровневых
-                порядков коррупции и вопросов управления в пяти странах Центральной
-                Азии. Участники представили результаты первых этапов полевых
-                исследований, сосредоточенных на взаимодействии между:
-              </p>
-
-              <ul>
-                <li>международными антикоррупционными нормами;</li>
-                <li>национальным законодательством стран региона;</li>
-                <li>местными неформальными практиками и правовыми культурами.</li>
-              </ul>
-
-              <p>
-                Особое внимание уделялось междисциплинарному подходу, объединяющему
-                юриспруденцию, политологию и социологию. Исследователи ЕИМИ
-                активно участвовали в обсуждении, представляя региональный контекст
-                и эмпирические данные по Казахстану и другим странам Центральной
-                Азии.
-              </p>
-
-              <p>
-                Конференция предоставила ценную возможность для:
-              </p>
-
-              <ul>
-                <li>
-                  <strong>Обмена знаниями:</strong> укрепление связей и обмен
-                  методологиями с партнёрами из Лундского университета
-                  (координатор проекта), Карлова университета и Цюрихского
-                  университета.
-                </li>
-                <li>
-                  <strong>Обучения и развития:</strong> участие наших
-                  исследователей в специализированных тренингах, предусмотренных
-                  программой MSCA Staff Exchanges, что способствует повышению
-                  квалификации в сфере антикоррупционных исследований.
-                </li>
-                <li>
-                  <strong>Планирования:</strong> совместная разработка стратегий
-                  для второй половины проекта, включая подготовку к публикации
-                  ключевых научных работ и рекомендаций для политических структур.
-                </li>
-              </ul>
-
-              <p>
-                Промежуточная конференция MOCCA подтвердила высокую научную
-                значимость проекта и его потенциал для разработки эффективных
-                решений в сфере борьбы с коррупцией и улучшения управления в
-                странах Центральной Азии.
-              </p>
-            </div>
-          </div>
-        </motion.article>
-
-        {/* НОВОСТЬ 2 */}
-        <motion.article
-          className="news-item news-item--reverse"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6 }}
-        >
-          <div className="news-image-wrapper">
-            {/* здесь потом можно заменить placeholderImage на обложку отчёта */}
-            <img
-              src={news2}
-              alt="Исследовательский отчёт Corruption in Context"
-              className="news-image"
-            />
-          </div>
-
-          <div className="news-content">
-            <div className="news-meta">
-              <span className="news-tag">Новый отчёт</span>
-              <span className="news-date">Research Report in Sociology of Law 2025:2</span>
-            </div>
-            <h2 className="news-item-title">
-              Новый исследовательский отчёт &quot;Corruption in Context:
-              Institutions, Infrastructure and Economic Development&quot;
-            </h2>
-
-            <div className="news-item-body">
-              <p>
-                Мы рады сообщить о выходе нового важного исследовательского отчёта
-                исследователей ЕИМИ <strong>Динары Рахматуллаевой</strong> и{" "}
-                <strong>Данияра Калдиярова</strong>, подготовленного в рамках
-                проекта <strong>MOCCA (Multilevel Orders of Corruption in Central Asia)</strong>,
-                финансируемого Европейским Союзом:{" "}
-                <em>&quot;Corruption in Context: Institutions, Infrastructure and Economic Development&quot;</em>.
-              </p>
-
-              <p>
-                Издание вышло в серии{" "}
-                <strong>Research Report in Sociology of Law 2025:2</strong> Лундского
-                университета (Швеция), что подчёркивает высокий уровень
-                международного признания исследований, проводимых нашим
-                партнёрским консорциумом.
-              </p>
-
-              <p>
-                В этом отчёте исследователи анализируют критически важные
-                взаимосвязи между коррупционными практиками, качеством
-                институциональной среды и развитием экономической инфраструктуры в
-                странах Центральной Азии. Работа бросает вызов традиционным
-                представлениям о коррупции, предлагая углублённый контекстуальный
-                анализ того, как коррупция влияет на долгосрочный экономический
-                рост и общественное доверие.
-              </p>
-
-              <p>
-                Публикация отчёта в престижной серии докладов по социологии права
-                Лундского университета подчёркивает:
-              </p>
-
-              <ul>
-                <li>
-                  значимость эмпирически обоснованных данных для понимания
-                  механизмов, посредством которых коррупция деформирует экономические
-                  и социальные системы;
-                </li>
-                <li>
-                  вклад исследователей ЕИМИ в развитие международной научной
-                  дискуссии по тематике коррупции и управления;
-                </li>
-                <li>
-                  важность междисциплинарного подхода, объединяющего экономику,
-                  право и политику.
-                </li>
-              </ul>
-
-              <p>
-                Результаты работы будут использованы для разработки конкретных
-                рекомендаций для политических и экономических субъектов, которые
-                заинтересованы в повышении эффективности управления и
-                противодействии коррупции в Центральной Азии.
-              </p>
-
-              <p>
-                Данная публикация демонстрирует высокий уровень экспертизы наших
-                исследователей и подтверждает приверженность ЕИМИ созданию
-                научно обоснованной базы для реформирования и совершенствования
-                институтов управления в регионе.
-              </p>
-            </div>
-          </div>
-        </motion.article>
+                <div className="news-item-body">
+                  <PortableText value={item.body} />
+                </div>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </div>
   );

@@ -1,9 +1,11 @@
-/* src/index.css */
-
 html, body, #root {
   height: 100%;
   margin: 0;
   padding: 0;
+}
+
+html {
+  font-family: "Georgia", "Times New Roman", Times, serif;
 }
 
 body {
@@ -11,7 +13,23 @@ body {
   padding: 0;
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden; /* убираем горизонтальный скролл */
+  overflow-x: hidden;
+  font-family: "Georgia", "Times New Roman", Times, serif;
+}
+
+body,
+button,
+input,
+textarea,
+select,
+option {
+  font-family: "Georgia", "Times New Roman", Times, serif;
+}
+
+*,
+*::before,
+*::after {
+  font-family: inherit;
 }
 
 #root {

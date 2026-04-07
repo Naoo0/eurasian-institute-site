@@ -1,204 +1,115 @@
 // src/pages/About.jsx
 
-import React from "react";
-import Slider from "react-slick";
+import React, { useEffect, useState } from "react";
 import "../styles/About.css";
 
-// CSS для слайдера
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
+import { client, urlFor } from "../sanityClient";
 import placeholderImage from "../assets/placeholder.png";
 
 const About = () => {
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 3 } },
-      { breakpoint: 600, settings: { slidesToShow: 2 } },
-      { breakpoint: 480, settings: { slidesToShow: 1 } },
-    ],
-  };
+  const [page, setPage] = useState(null);
 
-const partners = [
-  {
-    name: "Lund University",
-    logo: placeholderImage,
-    url: "https://www.lunduniversity.lu.se/",
-  },
-  {
-    name: "MARS Project",
-    logo: placeholderImage,
-    url: "https://www.mars-project.example", // поменяешь потом
-  },
-  {
-    name: "MOCCA Project",
-    logo: placeholderImage,
-    url: "https://www.mocca-project.example",
-  },
-  {
-    name: "POLKA",
-    logo: placeholderImage,
-    url: "https://www.polka-project.example",
-  },
-  {
-    name: "Social Project",
-    logo: placeholderImage,
-    url: "https://www.social-project.example",
-  },
-];
+  useEffect(() => {
+    client
+      .fetch(
+        `*[_type == "pageAbout"][0]{
+          heroTitle,
+          heroSubtitle,
+          historyTitle,
+          historySubtitle,
+          historyParagraphs,
+          missionItems,
+          structureText,
+          values,
+          partnersIntro,
+          partners
+        }`
+      )
+      .then(setPage)
+      .catch(console.error);
+  }, []);
 
+  if (!page) return null; // можно сделать спиннер
+
+  const partners = page.partners || [];
 
   return (
     <div className="about-page">
       <header className="about-hero">
-        <h1>О нашем институте</h1>
-        <p>
-          Узнайте больше о нашей истории, миссии и команде, стоящей за
-          передовыми исследованиями.
-        </p>
+        <h1>{page.heroTitle}</h1>
+        {page.heroSubtitle && <p>{page.heroSubtitle}</p>}
       </header>
 
       <div className="page-content-wrapper">
         {/* 1. История института */}
         <section className="about-section">
-          <h2>Ключевые этапы и развитие</h2>
-          <h3>2023 год — Основание и формирование миссии</h3>
-          <p>
-            Институт начал свою деятельность с чётко определённой миссией —
-            проведение фундаментальных научных исследований и прикладных
-            разработок. Основателем и вдохновителем создания ЕИМИ стал{" "}
-            <strong>Калдияров Данияр Алтаевич</strong>, доктор экономических
-            наук, профессор. Он возглавлял исследовательские проекты,
-            финансируемые грантами, и участвовал в казахстанских и
-            международных исследовательских проектах.
-          </p>
-          <p>
-            Данияр Алтаевич является автором более 200 научных работ,
-            исследовательских статей, отчётов, монографий и учебных материалов.
-            Его исследовательские интересы включают экономику
-            агропромышленного комплекса, продовольственную безопасность,
-            региональное экономическое управление, анализ и оценку
-            инвестиционных проектов, инвестиционную привлекательность, а также
-            планирование и управление в высшем и послевузовском образовании.
-          </p>
-          <p>
-            Под его руководством были определены основные направления
-            исследований, утверждены планы и разработана стратегия развития
-            института.
-          </p>
+          <h2>{page.historyTitle}</h2>
+          {page.historySubtitle && <h3>{page.historySubtitle}</h3>}
+          {page.historyParagraphs?.map((text, idx) => (
+            <p key={idx}>{text}</p>
+          ))}
         </section>
 
         {/* 2. Миссия и видение */}
         <section className="about-section">
           <h2>Миссия и видение</h2>
           <ul>
-            <li>
-              <strong>Развитие исследовательской деятельности.</strong> С
-              момента своего создания ЕИМИ активно участвует в международных,
-              национальных и региональных программах и проектах. Мы постоянно
-              развиваем научные прогнозы и проводим экспертизы, а также
-              осуществляем исследования на контрактной основе, сотрудничая с
-              заказчиками в соответствии с законодательством Республики
-              Казахстан.
-            </li>
-            <li>
-              <strong>Вклад в научную среду.</strong> Институт активно
-              занимается издательской деятельностью, публикуя научные труды и
-              обеспечивая финансовую, материально-техническую и информационную
-              поддержку исследовательской работы. Это позволяет нашим учёным
-              делиться своими открытиями и способствовать глобальному научному
-              диалогу.
-            </li>
-            <li>
-              <strong>Формирование сильной команды.</strong> ЕИМИ уделяет особое
-              внимание подготовке высококвалифицированных научных кадров,
-              организуя исследовательские стажировки и повышение квалификации
-              для своих сотрудников.
-            </li>
-            <li>
-              <strong>Социальная и консультационная роль.</strong> ЕИМИ не
-              только проводит фундаментальные исследования, но и оказывает
-              консультационную поддержку государственным и другим
-              организациям, организует конференции, круглые столы и семинары, а
-              также проводит социологические опросы и экспертные интервью.
-            </li>
+            {page.missionItems?.map((item, idx) => (
+              <li key={idx}>
+                {item.title && <strong>{item.title}</strong>}{" "}
+                {item.body}
+              </li>
+            ))}
           </ul>
         </section>
 
         {/* 3. Структура института */}
         <section className="about-section">
           <h2>Структура института</h2>
-          <p>
-            Наша структура разработана для максимальной эффективности и
-            сотрудничества между отделами. Она включает в себя
-            исследовательские департаменты, административный блок и отдел
-            международного сотрудничества.
-          </p>
+          <p>{page.structureText}</p>
         </section>
 
         {/* 4. Наши ценности */}
         <section className="about-section">
           <h2>Наши ценности</h2>
           <div className="values-grid">
-            <div className="value-card">
-              <span className="value-icon">🔬</span>
-              <h3>Инновационность</h3>
-              <p>
-                Мы стремимся к открытиям и внедрению передовых методов в наших
-                исследованиях.
-              </p>
-            </div>
-            <div className="value-card">
-              <span className="value-icon">🤝</span>
-              <h3>Сотрудничество</h3>
-              <p>
-                Мы верим в силу коллективной работы и открытого диалога для
-                достижения общих целей.
-              </p>
-            </div>
-            <div className="value-card">
-              <span className="value-icon">🌍</span>
-              <h3>Глобальность</h3>
-              <p>
-                Наша работа направлена на решение глобальных вызовов и
-                интеграцию в мировое научное сообщество.
-              </p>
-            </div>
+            {page.values?.map((value, idx) => (
+              <div className="value-card" key={idx}>
+                {value.icon && (
+                  <span className="value-icon">{value.icon}</span>
+                )}
+                <h3>{value.title}</h3>
+                <p>{value.body}</p>
+              </div>
+            ))}
           </div>
         </section>
 
         {/* 5. Международное сотрудничество и партнёры */}
         <section className="about-section partners-section">
           <h2>Международное сотрудничество и партнёрства</h2>
-          <p>
-            Мы гордимся нашими партнёрскими отношениями с ведущими университетами,
-            исследовательскими центрами и организациями по всему миру. Это позволяет
-            нам обмениваться опытом, проводить совместные проекты и расширять
-            горизонты науки.
-          </p>
+          {page.partnersIntro && <p>{page.partnersIntro}</p>}
 
           <h3>Ключевые международные проекты</h3>
 
-
-          {/* Сетка партнёров */}
           <div className="partners-grid">
             {partners.map((partner, index) => (
               <a
-                key={index}
+                key={partner._key || index}
                 href={partner.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="partner-card"
               >
                 <div className="partner-logo-wrapper">
-                  <img src={partner.logo} alt={partner.name} />
+                  <img
+                    src={
+                      partner.logo
+                        ? urlFor(partner.logo).width(300).height(200).url()
+                        : placeholderImage
+                    }
+                    alt={partner.name}
+                  />
                 </div>
                 <span className="partner-name">{partner.name}</span>
               </a>

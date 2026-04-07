@@ -68,11 +68,7 @@ function Home() {
         </aside>
       </div>
 
-      <section className="newsletter-section">
-        <h2>Newsletter</h2>
-        <p>Want to stay informed about our various activities? Subscribe to our IIS newsletter!</p>
-        <button className="subscribe-btn">Subscribe here →</button>
-      </section>
+
     </main>
   );
 }

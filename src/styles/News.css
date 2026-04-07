@@ -57,18 +57,16 @@
   position: relative;
   border-radius: 16px;
   overflow: hidden;
-  background: radial-gradient(circle at top left, #3a7bd5 0%, #192a56 50%, #0b1120 100%);
-  min-height: 260px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: #f3f4f6; /* фон на случай отсутствия картинки */
+  width: 100%;
 }
 
 .news-image {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;          /* высота по пропорциям фото */
+  display: block;
   opacity: 0.9;
+  object-fit: contain;   /* ничего не обрезаем */
 }
 
 /* Текстовый блок */
@@ -137,10 +135,6 @@
   .news-item--reverse {
     grid-template-columns: 1fr;
   }
-
-  .news-item--reverse {
-    /* порядок блоков на мобильном не меняем, просто один столбец */
-  }
 }
 
 @media (max-width: 640px) {
@@ -159,11 +153,9 @@
   .news-item-title {
     font-size: 1.3rem;
   }
-
-  .news-image-wrapper {
-    min-height: 200px;
-  }
 }
+
+/* Ниже блок для текста на других страницах (если используется) */
 
 .benefits-full-text {
   max-width: 900px;
