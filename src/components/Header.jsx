@@ -44,9 +44,7 @@ function Header() {
               </button>
             </div>
             <div className="socials">
-              <a href="#"><FaTwitter /></a>
               <a href="#"><FaFacebookF /></a>
-              <a href="#"><FaLinkedinIn /></a>
               <a href="#"><FaPinterestP /></a>
             </div>
           </div>
