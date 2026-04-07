@@ -1,4 +1,3 @@
-// schemas/pageAbout.js
 export default {
   name: 'pageAbout',
   title: 'Страница "О нас"',
@@ -7,33 +6,37 @@ export default {
     {
       name: 'heroTitle',
       title: 'Заголовок hero-блока',
-      type: 'string',
+      type: 'localeString',
     },
     {
       name: 'heroSubtitle',
       title: 'Подзаголовок hero-блока',
-      type: 'text',
+      type: 'localeText',
     },
 
     // История
     {
       name: 'historyTitle',
       title: 'Заголовок блока истории',
-      type: 'string',
+      type: 'localeString',
     },
     {
       name: 'historySubtitle',
       title: 'Подзаголовок блока истории',
-      type: 'string',
+      type: 'localeString',
     },
     {
       name: 'historyParagraphs',
       title: 'Абзацы истории',
-      type: 'array',
-      of: [{ type: 'text' }],
+      type: 'localizedArrayText',
     },
 
     // Миссия и видение
+    {
+      name: 'missionSectionTitle',
+      title: 'Заголовок секции "Миссия и видение"',
+      type: 'localeString',
+    },
     {
       name: 'missionItems',
       title: 'Пункты "Миссия и видение"',
@@ -42,8 +45,8 @@ export default {
         {
           type: 'object',
           fields: [
-            { name: 'title', title: 'Заголовок пункта', type: 'string' },
-            { name: 'body', title: 'Текст пункта', type: 'text' },
+            { name: 'title', title: 'Заголовок пункта', type: 'localeString' },
+            { name: 'body', title: 'Текст пункта', type: 'localeText' },
           ],
         },
       ],
@@ -51,12 +54,22 @@ export default {
 
     // Структура
     {
+      name: 'structureSectionTitle',
+      title: 'Заголовок блока "Структура института"',
+      type: 'localeString',
+    },
+    {
       name: 'structureText',
       title: 'Текст блока "Структура института"',
-      type: 'text',
+      type: 'localeText',
     },
 
     // Ценности
+    {
+      name: 'valuesSectionTitle',
+      title: 'Заголовок секции "Наши ценности"',
+      type: 'localeString',
+    },
     {
       name: 'values',
       title: 'Наши ценности',
@@ -70,8 +83,8 @@ export default {
               title: 'Иконка (эмодзи или короткий текст)',
               type: 'string',
             },
-            { name: 'title', title: 'Заголовок', type: 'string' },
-            { name: 'body', title: 'Текст', type: 'text' },
+            { name: 'title', title: 'Заголовок', type: 'localeString' },
+            { name: 'body', title: 'Текст', type: 'localeText' },
           ],
         },
       ],
@@ -79,9 +92,19 @@ export default {
 
     // Партнёры
     {
+      name: 'partnersSectionTitle',
+      title: 'Заголовок секции партнёров',
+      type: 'localeString',
+    },
+    {
       name: 'partnersIntro',
       title: 'Текст перед блоком партнёров',
-      type: 'text',
+      type: 'localeText',
+    },
+    {
+      name: 'keyProjectsTitle',
+      title: 'Заголовок "Ключевые международные проекты"',
+      type: 'localeString',
     },
     {
       name: 'partners',
@@ -91,7 +114,7 @@ export default {
         {
           type: 'object',
           fields: [
-            { name: 'name', title: 'Название', type: 'string' },
+            { name: 'name', title: 'Название', type: 'localeString' },
             { name: 'url', title: 'Ссылка', type: 'url' },
             {
               name: 'logo',
