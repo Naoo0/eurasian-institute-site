@@ -1,12 +1,22 @@
-// src/pages/About.jsx
-
 import React, { useEffect, useState } from "react";
 import "../styles/About.css";
 
 import { client, urlFor } from "../sanityClient";
 import placeholderImage from "../assets/placeholder.png";
 
-const About = () => {
+const getLocalizedValue = (field, lang = "ru") => {
+  if (!field) return "";
+  if (typeof field === "string") return field;
+  return field[lang] || field.ru || field.kz || field.en || "";
+};
+
+const getLocalizedArray = (field, lang = "ru") => {
+  if (!field) return [];
+  if (Array.isArray(field)) return field;
+  return field[lang] || field.ru || field.kz || field.en || [];
+};
+
+const About = ({ lang = "ru" }) => {
   const [page, setPage] = useState(null);
 
   useEffect(() => {
@@ -18,79 +28,103 @@ const About = () => {
           historyTitle,
           historySubtitle,
           historyParagraphs,
-          missionItems,
+          missionSectionTitle,
+          missionItems[]{
+            _key,
+            title,
+            body
+          },
+          structureSectionTitle,
           structureText,
-          values,
+          valuesSectionTitle,
+          values[]{
+            _key,
+            icon,
+            title,
+            body
+          },
+          partnersSectionTitle,
           partnersIntro,
-          partners
+          keyProjectsTitle,
+          partners[]{
+            _key,
+            name,
+            url,
+            logo
+          }
         }`
       )
       .then(setPage)
       .catch(console.error);
   }, []);
 
-  if (!page) return null; // можно сделать спиннер
+  if (!page) return null;
 
   const partners = page.partners || [];
+  const historyParagraphs = getLocalizedArray(page.historyParagraphs, lang);
 
   return (
     <div className="about-page">
       <header className="about-hero">
-        <h1>{page.heroTitle}</h1>
-        {page.heroSubtitle && <p>{page.heroSubtitle}</p>}
+        <h1>{getLocalizedValue(page.heroTitle, lang)}</h1>
+        {getLocalizedValue(page.heroSubtitle, lang) && (
+          <p>{getLocalizedValue(page.heroSubtitle, lang)}</p>
+        )}
       </header>
 
       <div className="page-content-wrapper">
-        {/* 1. История института */}
         <section className="about-section">
-          <h2>{page.historyTitle}</h2>
-          {page.historySubtitle && <h3>{page.historySubtitle}</h3>}
-          {page.historyParagraphs?.map((text, idx) => (
+          <h2>{getLocalizedValue(page.historyTitle, lang)}</h2>
+          {getLocalizedValue(page.historySubtitle, lang) && (
+            <h3>{getLocalizedValue(page.historySubtitle, lang)}</h3>
+          )}
+          {historyParagraphs.map((text, idx) => (
             <p key={idx}>{text}</p>
           ))}
         </section>
 
-        {/* 2. Миссия и видение */}
         <section className="about-section">
-          <h2>Миссия и видение</h2>
+          <h2>{getLocalizedValue(page.missionSectionTitle, lang)}</h2>
           <ul>
             {page.missionItems?.map((item, idx) => (
-              <li key={idx}>
-                {item.title && <strong>{item.title}</strong>}{" "}
-                {item.body}
+              <li key={item._key || idx}>
+                {getLocalizedValue(item.title, lang) && (
+                  <strong>{getLocalizedValue(item.title, lang)}</strong>
+                )}{" "}
+                {getLocalizedValue(item.body, lang)}
               </li>
             ))}
           </ul>
         </section>
 
-        {/* 3. Структура института */}
         <section className="about-section">
-          <h2>Структура института</h2>
-          <p>{page.structureText}</p>
+          <h2>{getLocalizedValue(page.structureSectionTitle, lang)}</h2>
+          <p>{getLocalizedValue(page.structureText, lang)}</p>
         </section>
 
-        {/* 4. Наши ценности */}
         <section className="about-section">
-          <h2>Наши ценности</h2>
+          <h2>{getLocalizedValue(page.valuesSectionTitle, lang)}</h2>
           <div className="values-grid">
             {page.values?.map((value, idx) => (
-              <div className="value-card" key={idx}>
+              <div className="value-card" key={value._key || idx}>
                 {value.icon && (
                   <span className="value-icon">{value.icon}</span>
                 )}
-                <h3>{value.title}</h3>
-                <p>{value.body}</p>
+                <h3>{getLocalizedValue(value.title, lang)}</h3>
+                <p>{getLocalizedValue(value.body, lang)}</p>
               </div>
             ))}
           </div>
         </section>
 
-        {/* 5. Международное сотрудничество и партнёры */}
         <section className="about-section partners-section">
-          <h2>Международное сотрудничество и партнёрства</h2>
-          {page.partnersIntro && <p>{page.partnersIntro}</p>}
+          <h2>{getLocalizedValue(page.partnersSectionTitle, lang)}</h2>
 
-          <h3>Ключевые международные проекты</h3>
+          {getLocalizedValue(page.partnersIntro, lang) && (
+            <p>{getLocalizedValue(page.partnersIntro, lang)}</p>
+          )}
+
+          <h3>{getLocalizedValue(page.keyProjectsTitle, lang)}</h3>
 
           <div className="partners-grid">
             {partners.map((partner, index) => (
@@ -108,10 +142,12 @@ const About = () => {
                         ? urlFor(partner.logo).width(300).height(200).url()
                         : placeholderImage
                     }
-                    alt={partner.name}
+                    alt={getLocalizedValue(partner.name, lang)}
                   />
                 </div>
-                <span className="partner-name">{partner.name}</span>
+                <span className="partner-name">
+                  {getLocalizedValue(partner.name, lang)}
+                </span>
               </a>
             ))}
           </div>

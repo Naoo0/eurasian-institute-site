@@ -112,6 +112,7 @@
   text-decoration: none;
 }
 
+
 /* Адаптив: на узких экранах убираем абсолютное позиционирование */
 @media (max-width: 900px) {
   .header-top {

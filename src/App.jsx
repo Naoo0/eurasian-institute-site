@@ -1,42 +1,48 @@
 // src/App.jsx
 
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/home";
 import Team from "./pages/team";
-import News from "./pages/News"; // <-- Я поправил имя файла на заглавную букву, так принято
-import Projects from "./pages/Projects"; // <-- 1. ИМПОРТИРУЙ PROJECTS
-import Contact from "./pages/Contact"; // <-- 1. ИМПОРТИРУЙ
+import News from "./pages/News";
+import Projects from "./pages/Projects";
+import Contact from "./pages/Contact";
 import About from "./pages/About";
-import Partnership from "./pages/Partnership"; // <-- 1. ИМПОРТИРУЙ
-import Careers from "./pages/Careers"; // <-- 1. ИМПОРТИРУЙ
-import Publications from "./pages/Publications"; // <-- 1. ИМПОРТИРУЙ
+import Partnership from "./pages/Partnership";
+import Careers from "./pages/Careers";
+import Publications from "./pages/Publications";
 
-
-import "./App.css"; // Ты используешь './App.css', а не './styles/App.css'
+import "./App.css";
 
 function App() {
+  const [lang, setLang] = useState(() => {
+    return localStorage.getItem("site-language") || "ru";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("site-language", lang);
+  }, [lang]);
+
   return (
     <Router>
-       <div className="app-container"> {/* <-- СТАЛО ТАК */}
-        <Header />
-        <Navbar />
+      <div className="app-container">
+        <Header lang={lang} setLang={setLang} />
+        <Navbar lang={lang} />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/team" element={<Team />} />
-          <Route path="/projects" element={<Projects />} /> {/* <-- 2. ДОБАВЬ МАРШРУТ */}
-          <Route path="/news" element={<News />} /> {/* <-- 2. ДОБАВЬ МАРШРУТ */}
-          <Route path="/contacts" element={<Contact />} /> {/* <-- 2. ДОБАВЬ МАРШРУТ */}
-          <Route path="/about" element={<About />} /> {/* <-- 2. ДОБАВЬ МАРШРУТ */}
-          <Route path="/partnership" element={<Partnership />} /> {/* <-- 2. ДОБАВЬ МАРШРУТ */}
-          <Route path="/careers" element={<Careers />} /> {/* <-- 2. ДОБАВЬ МАРШРУТ */}
-          <Route path="/publications" element={<Publications />} /> {/* <-- 2. ДОБАВЬ МАРШРУТ */}
-
-
+          <Route path="/" element={<Home lang={lang} />} />
+          <Route path="/team" element={<Team lang={lang} />} />
+          <Route path="/projects" element={<Projects lang={lang} />} />
+          <Route path="/news" element={<News lang={lang} />} />
+          <Route path="/contacts" element={<Contact lang={lang} />} />
+          <Route path="/about" element={<About lang={lang} />} />
+          <Route path="/partnership" element={<Partnership lang={lang} />} />
+          <Route path="/careers" element={<Careers lang={lang} />} />
+          <Route path="/publications" element={<Publications lang={lang} />} />
         </Routes>
-        <Footer />
+        <Footer lang={lang} />
       </div>
     </Router>
   );

@@ -1,51 +1,67 @@
-// src/components/Header.jsx
-
 import React, { useState } from 'react';
-import { FaTwitter, FaFacebookF, FaLinkedinIn, FaPinterestP } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import logoImage from '../assets/logo.png';
 import "../styles/Header.css";
 import SubscribeModal from './SubscribeModal';
+import LanguageSwitcher from './LanguageSwitcher';
 
-function Header() {
+function Header({ lang, setLang }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const translations = {
+    ru: {
+      title: "Eurasian Institute for Interdisciplinary Studies",
+      subscribe: "Подписаться",
+      logoAlt: "Логотип Eurasian Institute",
+    },
+    kz: {
+      title: "Eurasian Institute for Interdisciplinary Studies",
+      subscribe: "Жазылу",
+      logoAlt: "Eurasian Institute логотипі",
+    },
+    en: {
+      title: "Eurasian Institute for Interdisciplinary Studies",
+      subscribe: "Subscribe",
+      logoAlt: "Eurasian Institute logo",
+    },
+  };
+
+  const t = translations[lang] || translations.ru;
 
   return (
     <>
       <header className="header">
         <div className="header-top">
 
-          {/* Левая часть: только логотип */}
           <div className="header-left">
             <Link to="/" className="logo-link">
               <img
                 src={logoImage}
-                alt="Логотип Eurasian Institute"
+                alt={t.logoAlt}
                 className="logo-image"
               />
             </Link>
           </div>
 
-          {/* Центральная часть: большая надпись */}
           <div className="header-center">
             <h1 className="header-title">
-              Eurasian Institute for Interdisciplinary Studies
+              {t.title}
             </h1>
           </div>
 
-          {/* Правая часть: кнопка и соцсети */}
           <div className="header-right">
             <div className="actions">
+              <LanguageSwitcher lang={lang} setLang={setLang} />
+
               <button
                 className="btn btn-yellow"
                 onClick={() => setIsModalOpen(true)}
               >
-                Подписаться
+                {t.subscribe}
               </button>
             </div>
+
             <div className="socials">
-              <a href="#"><FaFacebookF /></a>
-              <a href="#"><FaPinterestP /></a>
             </div>
           </div>
 
