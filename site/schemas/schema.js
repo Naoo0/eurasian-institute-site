@@ -9,11 +9,15 @@ import pageHome from './pageHome';
 import localeString from './localeString';
 import localeText from './localeText';
 import localizedArrayText from './localizedArrayText';
+import localizedPortableText from './localizedPortableText';
+import localizedArrayString from './localizedArrayString';
 
 export const schemaTypes = [
   localeString,
   localeText,
   localizedArrayText,
+  localizedPortableText,
+  localizedArrayString,
 
   newsItem,
   pagePartnership,

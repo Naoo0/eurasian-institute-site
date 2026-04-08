@@ -1,10 +1,21 @@
-// src/pages/Partnership.jsx
 import { useEffect, useState } from 'react';
 import { PortableText } from '@portabletext/react';
 import { client } from '../sanityClient';
 import '../styles/Partnership.css';
 
-function Partnership() {
+const getLocalizedValue = (field, lang = 'ru') => {
+  if (!field) return '';
+  if (typeof field === 'string') return field;
+  return field[lang] || field.ru || field.kz || field.en || '';
+};
+
+const getLocalizedArray = (field, lang = 'ru') => {
+  if (!field) return [];
+  if (Array.isArray(field)) return field;
+  return field[lang] || field.ru || field.kz || field.en || [];
+};
+
+function Partnership({ lang = 'ru' }) {
   const [page, setPage] = useState(null);
 
   useEffect(() => {
@@ -13,7 +24,9 @@ function Partnership() {
         `*[_type == "pagePartnership"][0]{
           heroTitle,
           heroSubtitle,
+          benefitsTitle,
           fullText,
+          directionsTitle,
           directions
         }`
       )
@@ -21,27 +34,32 @@ function Partnership() {
       .catch(console.error);
   }, []);
 
-  if (!page) return null; // можно сделать "Загрузка..."
+  if (!page) return null;
+
+  const localizedFullText = getLocalizedArray(page.fullText, lang);
+  const localizedDirections = getLocalizedArray(page.directions, lang);
 
   return (
     <div className="partnership-page">
       <header className="partnership-hero">
-        <h1>{page.heroTitle}</h1>
-        {page.heroSubtitle && <p>{page.heroSubtitle}</p>}
+        <h1>{getLocalizedValue(page.heroTitle, lang)}</h1>
+        {getLocalizedValue(page.heroSubtitle, lang) && (
+          <p>{getLocalizedValue(page.heroSubtitle, lang)}</p>
+        )}
       </header>
 
       <div className="page-content-wrapper">
         <section className="partnership-section">
-          <h2>Почему стоит сотрудничать с нами?</h2>
+          <h2>{getLocalizedValue(page.benefitsTitle, lang)}</h2>
           <div className="benefits-full-text">
-            <PortableText value={page.fullText} />
+            <PortableText value={localizedFullText} />
           </div>
         </section>
 
         <section className="partnership-section">
-          <h2>Направления сотрудничества</h2>
+          <h2>{getLocalizedValue(page.directionsTitle, lang)}</h2>
           <ul className="cooperation-list">
-            {page.directions?.map((item, i) => (
+            {localizedDirections.map((item, i) => (
               <li key={i}>{item}</li>
             ))}
           </ul>
