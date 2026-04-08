@@ -1,11 +1,30 @@
-// src/pages/Team.jsx
 import { useEffect, useState } from 'react';
 import { client, urlFor } from '../sanityClient';
 import '../styles/Team.css';
 import TeamMemberCard from '../components/TeamMemberCard';
 
-function Team() {
+const getLocalizedValue = (field, lang = 'ru') => {
+  if (!field) return '';
+  if (typeof field === 'string') return field;
+  return field[lang] || field.ru || field.kz || field.en || '';
+};
+
+function Team({ lang = 'ru' }) {
   const [members, setMembers] = useState([]);
+
+  const translations = {
+    ru: {
+      title: 'Исследовательская группа',
+    },
+    kz: {
+      title: 'Зерттеу тобы',
+    },
+    en: {
+      title: 'Research Team',
+    },
+  };
+
+  const t = translations[lang] || translations.ru;
 
   useEffect(() => {
     client
@@ -28,13 +47,13 @@ function Team() {
   }, []);
 
   if (!members.length) {
-    return null; // или "Загрузка..."
+    return null;
   }
 
   return (
     <div className="page-container">
       <header className="page-header">
-        <h1>Исследовательская группа</h1>
+        <h1>{t.title}</h1>
       </header>
 
       <section className="team-grid">
@@ -43,8 +62,13 @@ function Team() {
             key={m._id}
             member={{
               ...m,
+              position: getLocalizedValue(m.position, lang),
+              degree: getLocalizedValue(m.degree, lang),
+              bio: getLocalizedValue(m.bio, lang),
+              interests: getLocalizedValue(m.interests, lang),
               photo: m.photo ? urlFor(m.photo).width(500).height(500).url() : null,
             }}
+            lang={lang}
           />
         ))}
       </section>

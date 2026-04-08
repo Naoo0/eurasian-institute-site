@@ -1,4 +1,3 @@
-// site/schemas/project.js
 export default {
   name: 'project',
   title: 'Проект',
@@ -7,18 +6,32 @@ export default {
     {
       name: 'title',
       title: 'Название проекта',
-      type: 'string',
+      type: 'object',
+      fields: [
+        { name: 'ru', title: 'Русский', type: 'string' },
+        { name: 'kk', title: 'Қазақша', type: 'string' },
+        { name: 'en', title: 'English', type: 'string' },
+      ],
     },
     {
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      options: { source: 'title', maxLength: 96 },
+      options: {
+        source: (doc) =>
+          doc?.title?.en || doc?.title?.ru || doc?.title?.kk || 'project',
+        maxLength: 96,
+      },
     },
     {
       name: 'tag',
-      title: 'Тег / программа (MSCA, Horizon 2020 и т.п.)',
-      type: 'string',
+      title: 'Тег / программа',
+      type: 'object',
+      fields: [
+        { name: 'ru', title: 'Русский', type: 'string' },
+        { name: 'kk', title: 'Қазақша', type: 'string' },
+        { name: 'en', title: 'English', type: 'string' },
+      ],
     },
     {
       name: 'order',
@@ -35,19 +48,70 @@ export default {
     {
       name: 'paragraphs',
       title: 'Основной текст (абзацы)',
-      type: 'array',
-      of: [{ type: 'text' }],
+      type: 'object',
+      fields: [
+        {
+          name: 'ru',
+          title: 'Русский',
+          type: 'array',
+          of: [{ type: 'text' }],
+        },
+        {
+          name: 'kk',
+          title: 'Қазақша',
+          type: 'array',
+          of: [{ type: 'text' }],
+        },
+        {
+          name: 'en',
+          title: 'English',
+          type: 'array',
+          of: [{ type: 'text' }],
+        },
+      ],
     },
     {
       name: 'bullets',
-      title: 'Ключевые пункты (буллеты)',
-      type: 'array',
-      of: [{ type: 'string' }],
+      title: 'Ключевые пункты',
+      type: 'object',
+      fields: [
+        {
+          name: 'ru',
+          title: 'Русский',
+          type: 'array',
+          of: [{ type: 'string' }],
+        },
+        {
+          name: 'kk',
+          title: 'Қазақша',
+          type: 'array',
+          of: [{ type: 'string' }],
+        },
+        {
+          name: 'en',
+          title: 'English',
+          type: 'array',
+          of: [{ type: 'string' }],
+        },
+      ],
     },
     {
       name: 'footer',
       title: 'Финальный абзац / вывод',
-      type: 'text',
+      type: 'object',
+      fields: [
+        { name: 'ru', title: 'Русский', type: 'text' },
+        { name: 'kk', title: 'Қазақша', type: 'text' },
+        { name: 'en', title: 'English', type: 'text' },
+      ],
     },
   ],
+
+  preview: {
+    select: {
+      title: 'title.ru',
+      subtitle: 'tag.ru',
+      media: 'image',
+    },
+  },
 };
