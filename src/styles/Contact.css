@@ -1,7 +1,7 @@
 /* src/styles/Contact.css */
 
 /* --- ОБЩИЕ СТИЛИ СТРАНИЦЫ --- */
-.page-container {
+.contact-page {
     padding: 40px 20px;
     background-color: #f8f9fa; /* Светлый фон для контраста */
 }
@@ -28,7 +28,7 @@
 /* --- КАРТОЧКИ С ИНФОРМАЦИЕЙ --- */
 .contact-info {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 30px;
     max-width: 1200px;
     margin: 0 auto 60px auto;
@@ -119,4 +119,50 @@
 
 .contact-form button:hover {
     background-color: #2a5a9d;
+}
+
+@media (max-width: 768px) {
+  .contact-page {
+    padding: 30px 16px;
+  }
+
+  .contact-header {
+    margin-bottom: 36px;
+  }
+
+  .contact-header h1 {
+    font-size: 2rem;
+  }
+
+  .contact-header p {
+    font-size: 1rem;
+  }
+
+  .contact-info {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  .contact-card {
+    padding: 24px 20px;
+  }
+
+  .contact-form-section {
+    padding: 24px 18px;
+  }
+
+  .contact-form button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-card h2 {
+    font-size: 1.25rem;
+  }
+
+  .contact-card p {
+    font-size: 1rem;
+  }
 }

@@ -48,7 +48,7 @@ function Partnership({ lang = 'ru' }) {
         )}
       </header>
 
-      <div className="page-content-wrapper">
+      <div className="partnership-content-wrapper">
         <section className="partnership-section">
           <h2>{getLocalizedValue(page.benefitsTitle, lang)}</h2>
           <div className="benefits-full-text">

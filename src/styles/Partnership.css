@@ -25,7 +25,7 @@
 
 /* Контент страницы */
 
-.page-content-wrapper {
+.partnership-content-wrapper {
   max-width: 1100px;
   margin: 0 auto;
   padding: 40px 20px;
@@ -162,5 +162,29 @@
 
   .benefit-card {
     padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .partnership-content-wrapper {
+    padding: 32px 16px;
+  }
+
+  .cooperation-list {
+    padding-left: 20px;
+  }
+
+  .cooperation-list li {
+    font-size: 1rem;
+  }
+
+  .cta-section {
+    padding: 30px 18px;
+  }
+
+  .cta-button {
+    width: 100%;
+    max-width: 280px;
+    box-sizing: border-box;
   }
 }

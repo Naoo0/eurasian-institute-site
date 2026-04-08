@@ -43,3 +43,40 @@
   border-radius: 8px;
   display: block;
 }
+
+.grid-section.reverse {
+  flex-direction: row-reverse;
+}
+
+@media (max-width: 900px) {
+  .grid-section,
+  .grid-section.reverse {
+    flex-direction: column;
+    gap: 24px;
+    padding: 32px 20px;
+    text-align: center;
+  }
+
+  .grid-section > div:first-child {
+    max-width: 100%;
+  }
+
+  .grid-section img {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 48px 16px;
+  }
+
+  .grid-section {
+    padding: 24px 16px;
+  }
+
+  .grid-section h2 {
+    font-size: 1.1rem;
+  }
+}

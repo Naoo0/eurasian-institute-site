@@ -17,7 +17,7 @@ const sliderSettings = {
   slidesToShow: 1,
   slidesToScroll: 1,
   autoplay: false,
-  adaptiveHeight: false,
+  adaptiveHeight: true,
   centerMode: true,
   centerPadding: "120px",
   responsive: [
@@ -26,6 +26,7 @@ const sliderSettings = {
       settings: {
         centerMode: false,
         centerPadding: "0px",
+        adaptiveHeight: true,
       },
     },
     {
@@ -33,6 +34,9 @@ const sliderSettings = {
       settings: {
         centerMode: false,
         centerPadding: "0px",
+        adaptiveHeight: true,
+        arrows: false,
+        dots: true,
       },
     },
   ],

@@ -62,7 +62,7 @@ const News = ({ lang = 'ru' }) => {
   }
 
   return (
-    <div className="page-container">
+    <div className=".news-page">
       <div className="news-header">
         <h1 className="news-main-title">{t.title}</h1>
         <p className="news-main-subtitle">{t.subtitle}</p>

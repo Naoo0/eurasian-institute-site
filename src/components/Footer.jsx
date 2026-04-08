@@ -27,7 +27,7 @@ function Footer() {
         <div className="footer-right">
           <nav className="footer-links">
             <a href="/news">News</a>
-            <a href="/contact">Contact</a>
+            <a href="/contacts">Contact</a>
           </nav>
 
           <div className="footer-socials">

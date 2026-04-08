@@ -91,7 +91,7 @@ const Contact = ({ lang = "ru" }) => {
 
   return (
     <motion.div
-      className="page-container"
+      className="contact-page"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}

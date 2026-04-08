@@ -72,7 +72,7 @@ const About = ({ lang = "ru" }) => {
         )}
       </header>
 
-      <div className="page-content-wrapper">
+      <div className="about-content-wrapper">
         <section className="about-section">
           <h2>{getLocalizedValue(page.historyTitle, lang)}</h2>
           {getLocalizedValue(page.historySubtitle, lang) && (

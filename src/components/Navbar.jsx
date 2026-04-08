@@ -1,7 +1,15 @@
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "../styles/Navbar.css";
 
 function Navbar({ lang = "ru" }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname, lang]);
+
   const translations = {
     ru: {
       about: "О нас",
@@ -10,6 +18,7 @@ function Navbar({ lang = "ru" }) {
       news: "Новости и события",
       partnership: "Партнёрство и сотрудничество",
       contacts: "Контакты",
+      menu: "Меню",
     },
     kz: {
       about: "Біз туралы",
@@ -18,6 +27,7 @@ function Navbar({ lang = "ru" }) {
       news: "Жаңалықтар мен оқиғалар",
       partnership: "Серіктестік және ынтымақтастық",
       contacts: "Байланыс",
+      menu: "Мәзір",
     },
     en: {
       about: "About us",
@@ -26,6 +36,7 @@ function Navbar({ lang = "ru" }) {
       news: "News and Events",
       partnership: "Partnership and Cooperation",
       contacts: "Contacts",
+      menu: "Menu",
     },
   };
 
@@ -33,14 +44,28 @@ function Navbar({ lang = "ru" }) {
 
   return (
     <nav className="navbar">
-      <ul>
-        <li><Link to="/about">{t.about}</Link></li>
-        <li><Link to="/projects">{t.projects}</Link></li>
-        <li><Link to="/team">{t.team}</Link></li>
-        <li><Link to="/news">{t.news}</Link></li>
-        <li><Link to="/partnership">{t.partnership}</Link></li>
-        <li><Link to="/contacts">{t.contacts}</Link></li>
-      </ul>
+      <div className="navbar-inner">
+        <button
+          className={`navbar-toggle ${isOpen ? "is-open" : ""}`}
+          type="button"
+          aria-label={t.menu}
+          aria-expanded={isOpen}
+          onClick={() => setIsOpen((prev) => !prev)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+
+        <ul className={`navbar-list ${isOpen ? "is-open" : ""}`}>
+          <li><Link to="/about">{t.about}</Link></li>
+          <li><Link to="/projects">{t.projects}</Link></li>
+          <li><Link to="/team">{t.team}</Link></li>
+          <li><Link to="/news">{t.news}</Link></li>
+          <li><Link to="/partnership">{t.partnership}</Link></li>
+          <li><Link to="/contacts">{t.contacts}</Link></li>
+        </ul>
+      </div>
     </nav>
   );
 }
