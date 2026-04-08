@@ -1,11 +1,45 @@
-// src/pages/News.jsx
 import { useEffect, useState } from 'react';
 import { PortableText } from '@portabletext/react';
 import { client, urlFor } from '../sanityClient';
 import '../styles/News.css';
 
-const News = () => {
+const getLocalizedValue = (field, lang = 'ru') => {
+  if (!field) return '';
+  if (typeof field === 'string') return field;
+  return field[lang] || field.ru || field.kz || field.en || '';
+};
+
+const getLocalizedArray = (field, lang = 'ru') => {
+  if (!field) return [];
+  if (Array.isArray(field)) return field;
+  return field[lang] || field.ru || field.kz || field.en || [];
+};
+
+const News = ({ lang = 'ru' }) => {
   const [items, setItems] = useState([]);
+
+  const translations = {
+    ru: {
+      title: 'Новости',
+      subtitle:
+        'Актуальные события и публикации исследователей Евразийского института междисциплинарных исследований (ЕИМИ)',
+      locale: 'ru-RU',
+    },
+    kz: {
+      title: 'Жаңалықтар',
+      subtitle:
+        'Еуразиялық пәнаралық зерттеулер институты зерттеушілерінің өзекті оқиғалары мен жарияланымдары',
+      locale: 'kk-KZ',
+    },
+    en: {
+      title: 'News',
+      subtitle:
+        'Current events and publications of researchers of the Eurasian Institute for Interdisciplinary Studies',
+      locale: 'en-US',
+    },
+  };
+
+  const t = translations[lang] || translations.ru;
 
   useEffect(() => {
     client
@@ -30,22 +64,23 @@ const News = () => {
   return (
     <div className="page-container">
       <div className="news-header">
-        <h1 className="news-main-title">Новости</h1>
-        <p className="news-main-subtitle">
-          Актуальные события и публикации исследователей Евразийского института
-          междисциплинарных исследований (ЕИМИ)
-        </p>
+        <h1 className="news-main-title">{t.title}</h1>
+        <p className="news-main-subtitle">{t.subtitle}</p>
       </div>
 
       <div className="news-list">
         {items.map((item, index) => {
           const formattedDate = item.date
-            ? new Date(item.date).toLocaleDateString('ru-RU', {
+            ? new Date(item.date).toLocaleDateString(t.locale, {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
               })
             : '';
+
+          const localizedTitle = getLocalizedValue(item.title, lang);
+          const localizedTag = getLocalizedValue(item.tag, lang);
+          const localizedBody = getLocalizedArray(item.body, lang);
 
           return (
             <article
@@ -55,8 +90,8 @@ const News = () => {
               <div className="news-image-wrapper">
                 {item.image ? (
                   <img
-                    src={urlFor(item.image).width(1200).url()} // ВАЖНО: БЕЗ .height(...)
-                    alt={item.title}
+                    src={urlFor(item.image).width(1200).url()}
+                    alt={localizedTitle}
                     className="news-image"
                   />
                 ) : (
@@ -66,14 +101,14 @@ const News = () => {
 
               <div className="news-content">
                 <div className="news-meta">
-                  {item.tag && <span className="news-tag">{item.tag}</span>}
+                  {localizedTag && <span className="news-tag">{localizedTag}</span>}
                   {formattedDate && <span className="news-date">{formattedDate}</span>}
                 </div>
 
-                <h2 className="news-item-title">{item.title}</h2>
+                <h2 className="news-item-title">{localizedTitle}</h2>
 
                 <div className="news-item-body">
-                  <PortableText value={item.body} />
+                  <PortableText value={localizedBody} />
                 </div>
               </div>
             </article>
