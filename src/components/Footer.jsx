@@ -31,7 +31,7 @@ function Footer() {
           </nav>
 
           <div className="footer-socials">
-            <a
+            {/* <a
               href="https://instagram.com/yourprofile"
               target="_blank"
               rel="noopener noreferrer"
@@ -56,7 +56,7 @@ function Footer() {
               aria-label="WhatsApp"
             >
               <FaWhatsapp />
-            </a>
+            </a> */}
           </div>
         </div>
       </div>
