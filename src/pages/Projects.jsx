@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Slider from "react-slick";
 import { useTranslation } from "react-i18next";
 import "../styles/Projects.css";
@@ -9,7 +9,7 @@ import placeholderImage from "../assets/placeholder.png";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const sliderSettings = {
+const desktopSliderSettings = {
   dots: false,
   arrows: true,
   infinite: true,
@@ -27,16 +27,6 @@ const sliderSettings = {
         centerMode: false,
         centerPadding: "0px",
         adaptiveHeight: true,
-      },
-    },
-    {
-      breakpoint: 768,
-      settings: {
-        centerMode: false,
-        centerPadding: "0px",
-        adaptiveHeight: true,
-        arrows: false,
-        dots: true,
       },
     },
   ],
@@ -88,6 +78,51 @@ const getLocalizedArray = (field, lang) => {
   return field[lang] || field.ru || field.kk || field.en || [];
 };
 
+function ProjectCard({ project, lang, text }) {
+  const projectTitle = getLocalizedValue(project.title, lang);
+  const projectTag = getLocalizedValue(project.tag, lang);
+  const projectParagraphs = getLocalizedArray(project.paragraphs, lang);
+  const projectBullets = getLocalizedArray(project.bullets, lang);
+  const projectFooter = getLocalizedValue(project.footer, lang);
+
+  return (
+    <article className="project-card">
+      <div className="project-card-header">
+        {projectTag && <span className="project-tag">{projectTag}</span>}
+        <h2 className="project-title">{projectTitle}</h2>
+      </div>
+
+      <div className="project-image-wrapper">
+        <img
+          src={
+            project.image
+              ? urlFor(project.image).width(1200).url()
+              : placeholderImage
+          }
+          alt={projectTitle || text.imageAlt}
+          className="project-image"
+        />
+      </div>
+
+      <div className="project-body">
+        {projectParagraphs?.map((paragraph, idx) => (
+          <p key={idx}>{paragraph}</p>
+        ))}
+
+        {projectBullets?.length > 0 && (
+          <ul className="project-bullets">
+            {projectBullets.map((item, idx) => (
+              <li key={idx}>{item}</li>
+            ))}
+          </ul>
+        )}
+
+        {projectFooter && <p className="project-footer-text">{projectFooter}</p>}
+      </div>
+    </article>
+  );
+}
+
 const Projects = () => {
   const { i18n } = useTranslation();
   const lang = normalizeLang(i18n.language);
@@ -95,6 +130,16 @@ const Projects = () => {
 
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     client
@@ -120,6 +165,38 @@ const Projects = () => {
       .finally(() => setLoading(false));
   }, []);
 
+  const content = useMemo(() => {
+    if (loading) {
+      return <p className="projects-status">{text.loading}</p>;
+    }
+
+    if (!projects.length) {
+      return <p className="projects-status">{text.empty}</p>;
+    }
+
+    if (isMobile) {
+      return (
+        <div className="projects-mobile-list">
+          {projects.map((project) => (
+            <div key={project._id} className="project-mobile-item">
+              <ProjectCard project={project} lang={lang} text={text} />
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    return (
+      <Slider {...desktopSliderSettings}>
+        {projects.map((project) => (
+          <div key={project._id} className="project-slide">
+            <ProjectCard project={project} lang={lang} text={text} />
+          </div>
+        ))}
+      </Slider>
+    );
+  }, [loading, projects, isMobile, lang, text]);
+
   return (
     <div className="projects-page">
       <header className="projects-header">
@@ -127,68 +204,7 @@ const Projects = () => {
         <p>{text.description}</p>
       </header>
 
-      <div className="projects-slider-wrapper">
-        {loading && <p className="projects-status">{text.loading}</p>}
-
-        {!loading && !projects.length && (
-          <p className="projects-status">{text.empty}</p>
-        )}
-
-        {!loading && projects.length > 0 && (
-          <Slider {...sliderSettings}>
-            {projects.map((project) => {
-              const projectTitle = getLocalizedValue(project.title, lang);
-              const projectTag = getLocalizedValue(project.tag, lang);
-              const projectParagraphs = getLocalizedArray(project.paragraphs, lang);
-              const projectBullets = getLocalizedArray(project.bullets, lang);
-              const projectFooter = getLocalizedValue(project.footer, lang);
-
-              return (
-                <div key={project._id} className="project-slide">
-                  <article className="project-card">
-                    <div className="project-card-header">
-                      {projectTag && (
-                        <span className="project-tag">{projectTag}</span>
-                      )}
-                      <h2 className="project-title">{projectTitle}</h2>
-                    </div>
-
-                    <div className="project-image-wrapper">
-                      <img
-                        src={
-                          project.image
-                            ? urlFor(project.image).width(1200).url()
-                            : placeholderImage
-                        }
-                        alt={projectTitle || text.imageAlt}
-                        className="project-image"
-                      />
-                    </div>
-
-                    <div className="project-body">
-                      {projectParagraphs?.map((paragraph, idx) => (
-                        <p key={idx}>{paragraph}</p>
-                      ))}
-
-                      {projectBullets?.length > 0 && (
-                        <ul className="project-bullets">
-                          {projectBullets.map((item, idx) => (
-                            <li key={idx}>{item}</li>
-                          ))}
-                        </ul>
-                      )}
-
-                      {projectFooter && (
-                        <p className="project-footer-text">{projectFooter}</p>
-                      )}
-                    </div>
-                  </article>
-                </div>
-              );
-            })}
-          </Slider>
-        )}
-      </div>
+      <div className="projects-slider-wrapper">{content}</div>
     </div>
   );
 };
