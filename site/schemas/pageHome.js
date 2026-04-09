@@ -1,4 +1,3 @@
-// site/schemas/pageHome.js
 export default {
   name: 'pageHome',
   title: 'Главная страница',
@@ -12,7 +11,16 @@ export default {
         {
           type: 'object',
           fields: [
-            { name: 'title', title: 'Заголовок', type: 'string' },
+            {
+              name: 'title',
+              title: 'Заголовок',
+              type: 'object',
+              fields: [
+                { name: 'ru', title: 'Русский', type: 'string' },
+                { name: 'kk', title: 'Қазақша', type: 'string' },
+                { name: 'en', title: 'English', type: 'string' },
+              ],
+            },
             {
               name: 'image',
               title: 'Картинка',
@@ -29,11 +37,15 @@ export default {
       ],
     },
 
-    // Featured-новость посередине
     {
       name: 'featuredNewsLabel',
-      title: 'Лейбл над новостью (например, НОВОСТИ)',
-      type: 'string',
+      title: 'Лейбл над новостью',
+      type: 'object',
+      fields: [
+        { name: 'ru', title: 'Русский', type: 'string' },
+        { name: 'kk', title: 'Қазақша', type: 'string' },
+        { name: 'en', title: 'English', type: 'string' },
+      ],
     },
     {
       name: 'featuredNews',
@@ -42,7 +54,6 @@ export default {
       to: [{ type: 'newsItem' }],
     },
 
-    // Правый сайтбар
     {
       name: 'sidebarCards',
       title: 'Карточки справа',
@@ -51,8 +62,26 @@ export default {
         {
           type: 'object',
           fields: [
-            { name: 'title', title: 'Заголовок', type: 'string' },
-            { name: 'subtitle', title: 'Подпись (опционально)', type: 'string' },
+            {
+              name: 'title',
+              title: 'Заголовок',
+              type: 'object',
+              fields: [
+                { name: 'ru', title: 'Русский', type: 'string' },
+                { name: 'kk', title: 'Қазақша', type: 'string' },
+                { name: 'en', title: 'English', type: 'string' },
+              ],
+            },
+            {
+              name: 'subtitle',
+              title: 'Подпись (опционально)',
+              type: 'object',
+              fields: [
+                { name: 'ru', title: 'Русский', type: 'string' },
+                { name: 'kk', title: 'Қазақша', type: 'string' },
+                { name: 'en', title: 'English', type: 'string' },
+              ],
+            },
             { name: 'url', title: 'Ссылка (опционально)', type: 'url' },
             {
               name: 'image',
@@ -65,21 +94,43 @@ export default {
       ],
     },
 
-    // Newsletter
     {
       name: 'newsletterTitle',
       title: 'Заголовок блока Newsletter',
-      type: 'string',
+      type: 'object',
+      fields: [
+        { name: 'ru', title: 'Русский', type: 'string' },
+        { name: 'kk', title: 'Қазақша', type: 'string' },
+        { name: 'en', title: 'English', type: 'string' },
+      ],
     },
     {
       name: 'newsletterText',
       title: 'Текст блока Newsletter',
-      type: 'text',
+      type: 'object',
+      fields: [
+        { name: 'ru', title: 'Русский', type: 'text' },
+        { name: 'kk', title: 'Қазақша', type: 'text' },
+        { name: 'en', title: 'English', type: 'text' },
+      ],
     },
     {
       name: 'newsletterButton',
       title: 'Текст кнопки Newsletter',
-      type: 'string',
+      type: 'object',
+      fields: [
+        { name: 'ru', title: 'Русский', type: 'string' },
+        { name: 'kk', title: 'Қазақша', type: 'string' },
+        { name: 'en', title: 'English', type: 'string' },
+      ],
     },
   ],
+
+  preview: {
+    prepare() {
+      return {
+        title: 'Главная страница',
+      };
+    },
+  },
 };
