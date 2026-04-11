@@ -1,212 +1,180 @@
-import React, { useEffect, useMemo, useState } from "react";
-import Slider from "react-slick";
-import { useTranslation } from "react-i18next";
-import "../styles/Projects.css";
-
-import { client, urlFor } from "../sanityClient";
-import placeholderImage from "../assets/placeholder.png";
-
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
-const desktopSliderSettings = {
-  dots: false,
-  arrows: true,
-  infinite: true,
-  speed: 280,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  autoplay: false,
-  adaptiveHeight: true,
-  centerMode: true,
-  centerPadding: "120px",
-  responsive: [
-    {
-      breakpoint: 1024,
-      settings: {
-        centerMode: false,
-        centerPadding: "0px",
-        adaptiveHeight: true,
-      },
-    },
-  ],
-};
-
-const uiText = {
-  ru: {
-    title: "Ключевые международные проекты",
-    description:
-      "Институт является активным участником европейских исследовательских консорциумов, финансируемых по линиям MSCA и Horizon 2020. Ниже представлены три стратегических направления сотрудничества.",
-    loading: "Загрузка проектов…",
-    empty: "Проекты ещё не добавлены или не опубликованы в Sanity.",
-    imageAlt: "Изображение проекта",
-  },
-  kk: {
-    title: "Негізгі халықаралық жобалар",
-    description:
-      "Институт MSCA және Horizon 2020 бағдарламалары бойынша қаржыландырылатын еуропалық зерттеу консорциумдарының белсенді қатысушысы болып табылады. Төменде ынтымақтастықтың үш стратегиялық бағыты ұсынылған.",
-    loading: "Жобалар жүктелуде…",
-    empty: "Жобалар Sanity-ге әлі қосылмаған немесе жарияланбаған.",
-    imageAlt: "Жоба суреті",
-  },
-  en: {
-    title: "Key International Projects",
-    description:
-      "The Institute is an active participant in European research consortia funded through MSCA and Horizon 2020. Below are three strategic areas of cooperation.",
-    loading: "Loading projects…",
-    empty: "Projects have not been added or published in Sanity yet.",
-    imageAlt: "Project image",
-  },
-};
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { client, urlFor } from '../sanityClient';
+import placeholderImage from '../assets/placeholder.png';
+import '../styles/Partnership.css';
 
 const normalizeLang = (lang) => {
-  if (!lang) return "ru";
-  if (lang.startsWith("kk") || lang.startsWith("kz")) return "kk";
-  if (lang.startsWith("en")) return "en";
-  return "ru";
+  if (!lang) return 'ru';
+  if (lang.startsWith('kk') || lang.startsWith('kz')) return 'kk';
+  if (lang.startsWith('en')) return 'en';
+  return 'ru';
 };
 
-const getLocalizedValue = (field, lang) => {
-  if (!field) return "";
-  if (typeof field === "string") return field;
-  return field[lang] || field.ru || field.kk || field.en || "";
+const getLocalizedValue = (field, lang = 'ru') => {
+  if (!field) return '';
+  if (typeof field === 'string') return field;
+  return field[lang] || field.ru || field.kk || field.en || '';
 };
 
-const getLocalizedArray = (field, lang) => {
+const getLocalizedArray = (field, lang = 'ru') => {
   if (!field) return [];
   if (Array.isArray(field)) return field;
   return field[lang] || field.ru || field.kk || field.en || [];
 };
 
-function ProjectCard({ project, lang, text }) {
-  const projectTitle = getLocalizedValue(project.title, lang);
-  const projectTag = getLocalizedValue(project.tag, lang);
-  const projectParagraphs = getLocalizedArray(project.paragraphs, lang);
-  const projectBullets = getLocalizedArray(project.bullets, lang);
-  const projectFooter = getLocalizedValue(project.footer, lang);
-
-  return (
-    <article className="project-card">
-      <div className="project-card-header">
-        {projectTag && <span className="project-tag">{projectTag}</span>}
-        <h2 className="project-title">{projectTitle}</h2>
-      </div>
-
-      <div className="project-image-wrapper">
-        <img
-          src={
-            project.image
-              ? urlFor(project.image).width(1200).url()
-              : placeholderImage
-          }
-          alt={projectTitle || text.imageAlt}
-          className="project-image"
-        />
-      </div>
-
-      <div className="project-body">
-        {projectParagraphs?.map((paragraph, idx) => (
-          <p key={idx}>{paragraph}</p>
-        ))}
-
-        {projectBullets?.length > 0 && (
-          <ul className="project-bullets">
-            {projectBullets.map((item, idx) => (
-              <li key={idx}>{item}</li>
-            ))}
-          </ul>
-        )}
-
-        {projectFooter && <p className="project-footer-text">{projectFooter}</p>}
-      </div>
-    </article>
-  );
-}
-
-const Projects = () => {
+function Partnership({ lang: propLang }) {
   const { i18n } = useTranslation();
-  const lang = normalizeLang(i18n.language);
-  const text = uiText[lang];
+  const lang = propLang || normalizeLang(i18n.language);
 
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const [page, setPage] = useState(null);
 
   useEffect(() => {
     client
-      .fetch(
-        `*[_type == "project"] | order(order asc){
-          _id,
-          order,
-          title,
-          tag,
-          image,
-          paragraphs,
-          bullets,
-          footer
-        }`
-      )
-      .then((data) => {
-        console.log("Projects from Sanity:", data);
-        setProjects(data || []);
-      })
-      .catch((err) => {
-        console.error("Error loading projects:", err);
-      })
-      .finally(() => setLoading(false));
+      .fetch(`
+        *[_type == "pagePartnership"][0]{
+          heroTitle,
+          heroSubtitle,
+
+          firstSectionTitle,
+          firstSectionSubtitle,
+          firstSectionPoints,
+          firstSectionImage,
+
+          secondSectionTitle,
+          secondSectionSubtitle,
+          secondSectionPoints,
+
+          thirdSectionTitle,
+          thirdSectionSubtitle,
+          thirdSectionPoints,
+          thirdSectionImage,
+
+          finalSectionTitle,
+          finalSectionPoints
+        }
+      `)
+      .then((data) => setPage(data || null))
+      .catch(console.error);
   }, []);
 
-  const content = useMemo(() => {
-    if (loading) {
-      return <p className="projects-status">{text.loading}</p>;
-    }
+  if (!page) {
+    return null;
+  }
 
-    if (!projects.length) {
-      return <p className="projects-status">{text.empty}</p>;
-    }
+  const firstSectionPoints = getLocalizedArray(page.firstSectionPoints, lang);
+  const secondSectionPoints = getLocalizedArray(page.secondSectionPoints, lang);
+  const thirdSectionPoints = getLocalizedArray(page.thirdSectionPoints, lang);
+  const finalSectionPoints = getLocalizedArray(page.finalSectionPoints, lang);
 
-    if (isMobile) {
-      return (
-        <div className="projects-mobile-list">
-          {projects.map((project) => (
-            <div key={project._id} className="project-mobile-item">
-              <ProjectCard project={project} lang={lang} text={text} />
-            </div>
-          ))}
-        </div>
-      );
-    }
+  const firstSectionImage = page.firstSectionImage
+    ? urlFor(page.firstSectionImage).width(1200).url()
+    : placeholderImage;
 
-    return (
-      <Slider {...desktopSliderSettings}>
-        {projects.map((project) => (
-          <div key={project._id} className="project-slide">
-            <ProjectCard project={project} lang={lang} text={text} />
-          </div>
-        ))}
-      </Slider>
-    );
-  }, [loading, projects, isMobile, lang, text]);
+  const thirdSectionImage = page.thirdSectionImage
+    ? urlFor(page.thirdSectionImage).width(1200).url()
+    : placeholderImage;
 
   return (
-    <div className="projects-page">
-      <header className="projects-header">
-        <h1>{text.title}</h1>
-        <p>{text.description}</p>
+    <main className="partnership-page">
+      <header className="partnership-hero">
+        <div className="partnership-container">
+          <h1>{getLocalizedValue(page.heroTitle, lang)}</h1>
+          {getLocalizedValue(page.heroSubtitle, lang) && (
+            <p>{getLocalizedValue(page.heroSubtitle, lang)}</p>
+          )}
+        </div>
       </header>
 
-      <div className="projects-slider-wrapper">{content}</div>
-    </div>
-  );
-};
+      <section className="partnership-section partnership-section-with-image">
+        <div className="partnership-container partnership-grid">
+          <div className="partnership-text">
+            <h2>{getLocalizedValue(page.firstSectionTitle, lang)}</h2>
 
-export default Projects;
+            {getLocalizedValue(page.firstSectionSubtitle, lang) && (
+              <p className="partnership-subtitle">
+                {getLocalizedValue(page.firstSectionSubtitle, lang)}
+              </p>
+            )}
+
+            <ul className="partnership-points">
+              {firstSectionPoints.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="partnership-image-wrap">
+            <img
+              src={firstSectionImage}
+              alt={getLocalizedValue(page.firstSectionTitle, lang) || 'Partnership'}
+              className="partnership-image"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="partnership-section">
+        <div className="partnership-container">
+          <div className="partnership-text">
+            <h2>{getLocalizedValue(page.secondSectionTitle, lang)}</h2>
+
+            {getLocalizedValue(page.secondSectionSubtitle, lang) && (
+              <p className="partnership-subtitle">
+                {getLocalizedValue(page.secondSectionSubtitle, lang)}
+              </p>
+            )}
+
+            <ul className="partnership-points">
+              {secondSectionPoints.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="partnership-section partnership-section-with-image">
+        <div className="partnership-container partnership-grid">
+          <div className="partnership-text">
+            <h2>{getLocalizedValue(page.thirdSectionTitle, lang)}</h2>
+
+            {getLocalizedValue(page.thirdSectionSubtitle, lang) && (
+              <p className="partnership-subtitle">
+                {getLocalizedValue(page.thirdSectionSubtitle, lang)}
+              </p>
+            )}
+
+            <ul className="partnership-points">
+              {thirdSectionPoints.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="partnership-image-wrap">
+            <img
+              src={thirdSectionImage}
+              alt={getLocalizedValue(page.thirdSectionTitle, lang) || 'Partnership'}
+              className="partnership-image"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="partnership-final-section">
+        <div className="partnership-container">
+          <h2>{getLocalizedValue(page.finalSectionTitle, lang)}</h2>
+
+          <ul className="partnership-points partnership-points-final">
+            {finalSectionPoints.map((item, index) => (
+              <li key={index}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+export default Partnership;

@@ -1,190 +1,106 @@
-/* src/styles/Partnership.css */
-
 .partnership-page {
-  background-color: #fff;
+  width: 100%;
+  color: #111;
+  background: #fff;
+}
+
+.partnership-container {
+  width: min(1200px, calc(100% - 40px));
+  margin: 0 auto;
 }
 
 .partnership-hero {
-  padding: 60px 20px;
+  padding: 80px 0 40px;
   text-align: center;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #e0e0e0;
 }
 
 .partnership-hero h1 {
-  font-size: 3rem;
-  font-weight: 600;
+  margin: 0 0 16px;
+  font-size: clamp(32px, 5vw, 56px);
+  line-height: 1.1;
+  font-weight: 700;
 }
 
 .partnership-hero p {
-  font-size: 1.2rem;
-  color: #666;
-  max-width: 700px;
-  margin: 10px auto 0 auto;
-}
-
-/* Контент страницы */
-
-.partnership-content-wrapper {
-  max-width: 1100px;
+  max-width: 800px;
   margin: 0 auto;
-  padding: 40px 20px;
+  font-size: 18px;
+  line-height: 1.7;
+  color: #555;
 }
 
-.partnership-section {
-  display: block !important;
-  margin-bottom: 60px;
-  text-align: center;
+.partnership-section,
+.partnership-final-section {
+  padding: 48px 0;
 }
 
-.partnership-section h2 {
-  font-size: 2.2rem;
-  font-weight: 600;
-  margin-bottom: 25px;
+.partnership-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
 }
 
-.partnership-lead {
-  max-width: 900px;
-  margin: 0 auto 30px auto;
-  font-size: 1.05rem;
-  color: #444;
+.partnership-text h2,
+.partnership-final-section h2 {
+  margin: 0 0 16px;
+  font-size: clamp(26px, 3vw, 40px);
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.partnership-subtitle {
+  margin: 0 0 20px;
+  font-size: 17px;
+  line-height: 1.7;
+  color: #555;
+}
+
+.partnership-points {
+  margin: 0;
+  padding-left: 22px;
+}
+
+.partnership-points li {
+  margin-bottom: 12px;
+  font-size: 17px;
   line-height: 1.7;
 }
 
-/* Секция "Почему с нами выгодно" */
-
-.benefits-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 30px;
-  text-align: left; /* текст внутри карточек выравниваем по левому краю */
+.partnership-image-wrap {
+  width: 100%;
 }
 
-.benefit-card {
-  background-color: #f8f9fa;
-  padding: 30px;
-  border-radius: 8px;
-  border-bottom: 3px solid #3a7bd5;
-  text-align: left;
+.partnership-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+  object-fit: cover;
 }
 
-.benefit-icon {
-  font-size: 2.5rem;
-  color: #3a7bd5;
-  margin-bottom: 15px;
+.partnership-points-final li {
+  margin-bottom: 14px;
 }
 
-.benefit-card h3 {
-  font-size: 1.4rem;
-  margin-bottom: 10px;
-}
-
-.benefit-card p {
-  color: #555;
-  line-height: 1.6;
-  margin-bottom: 10px;
-}
-
-.benefit-card ul {
-  margin: 10px 0 0 1.1rem;
-  padding-left: 0;
-  color: #444;
-  line-height: 1.6;
-}
-
-.benefit-card li {
-  margin-bottom: 6px;
-}
-
-/* Направления сотрудничества */
-
-.cooperation-list {
-  list-style-type: "✓ ";
-  padding-left: 25px;
-  text-align: left;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.cooperation-list li {
-  padding-left: 15px;
-  margin-bottom: 15px;
-  font-size: 1.1rem;
-  color: #444;
-}
-
-/* CTA-блок */
-
-.cta-section {
-  background-color: #3a7bd5;
-  color: white;
-  padding: 50px 30px;
-  border-radius: 8px;
-}
-
-.cta-section h2 {
-  color: white;
-}
-
-.cta-section p {
-  font-size: 1.1rem;
-  max-width: 600px;
-  margin: 0 auto 30px auto;
-}
-
-.cta-button {
-  background-color: #fff;
-  color: #3a7bd5;
-  padding: 15px 35px;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 1.1rem;
-  transition: all 0.2s ease;
-  display: inline-block;
-}
-
-.cta-button:hover {
-  background-color: #f0f0f0;
-  transform: translateY(-2px);
-}
-
-/* Адаптивность */
-
-@media (max-width: 768px) {
-  .partnership-hero h1 {
-    font-size: 2.3rem;
+@media (max-width: 900px) {
+  .partnership-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
   }
 
-  .partnership-section h2 {
-    font-size: 1.8rem;
+  .partnership-hero {
+    padding: 56px 0 24px;
   }
 
-  .benefit-card {
-    padding: 20px;
-  }
-}
-
-@media (max-width: 768px) {
-  .partnership-content-wrapper {
-    padding: 32px 16px;
+  .partnership-section,
+  .partnership-final-section {
+    padding: 32px 0;
   }
 
-  .cooperation-list {
-    padding-left: 20px;
-  }
-
-  .cooperation-list li {
-    font-size: 1rem;
-  }
-
-  .cta-section {
-    padding: 30px 18px;
-  }
-
-  .cta-button {
-    width: 100%;
-    max-width: 280px;
-    box-sizing: border-box;
+  .partnership-hero p,
+  .partnership-subtitle,
+  .partnership-points li {
+    font-size: 16px;
   }
 }
