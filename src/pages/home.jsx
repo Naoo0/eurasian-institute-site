@@ -47,6 +47,9 @@ function Home() {
     client
       .fetch(`
         *[_type == "pageHome"][0]{
+          heroTitle,
+          heroSubtitle,
+          heroImage,
           introBlocks[]{
             title,
             image,
@@ -82,20 +85,15 @@ function Home() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) {
-    return (
-      <main className="home">
-        <HeroSection />
-        <section className="content">
-          <p>{uiText.loading}</p>
-        </section>
-      </main>
-    );
-  }
-
   const introBlocks = homeData?.introBlocks || [];
   const featuredNews = homeData?.featuredNews || null;
   const sidebarCards = homeData?.sidebarCards || [];
+
+  const heroTitle = getLocalizedValue(homeData?.heroTitle, lang);
+  const heroSubtitle = getLocalizedValue(homeData?.heroSubtitle, lang);
+  const heroImage = homeData?.heroImage
+    ? urlFor(homeData.heroImage).width(1600).url()
+    : null;
 
   const featuredNewsLabel = getLocalizedValue(homeData?.featuredNewsLabel, lang);
   const newsletterTitle = getLocalizedValue(homeData?.newsletterTitle, lang);
@@ -105,15 +103,33 @@ function Home() {
   const featuredNewsTitle = getLocalizedValue(featuredNews?.title, lang);
   const featuredNewsExcerpt = getLocalizedValue(featuredNews?.excerpt, lang);
 
-  const featuredImage =
-    featuredNews?.mainImage || featuredNews?.image || null;
+  const featuredImage = featuredNews?.mainImage || featuredNews?.image || null;
 
   const featuredHref =
     featuredNews?.slug?.current ? `/news/${featuredNews.slug.current}` : "#";
 
+  if (loading) {
+    return (
+      <main className="home">
+        <HeroSection
+          title={heroTitle}
+          subtitle={heroSubtitle}
+          image={heroImage}
+        />
+        <section className="content">
+          <p>{uiText.loading}</p>
+        </section>
+      </main>
+    );
+  }
+
   return (
     <main className="home">
-      <HeroSection />
+      <HeroSection
+        title={heroTitle}
+        subtitle={heroSubtitle}
+        image={heroImage}
+      />
 
       <section className="content">
         {introBlocks.map((block, index) => (

@@ -4,6 +4,23 @@ export default {
   type: 'document',
   fields: [
     {
+      name: 'heroTitle',
+      title: 'Заголовок hero-блока',
+      type: 'localeString',
+    },
+    {
+      name: 'heroSubtitle',
+      title: 'Подзаголовок hero-блока',
+      type: 'localeText',
+    },
+    {
+      name: 'heroImage',
+      title: 'Изображение hero-блока',
+      type: 'image',
+      options: { hotspot: true },
+    },
+
+    {
       name: 'introBlocks',
       title: 'Верхние блоки (GridSection)',
       type: 'array',
@@ -82,7 +99,11 @@ export default {
                 { name: 'en', title: 'English', type: 'string' },
               ],
             },
-            { name: 'url', title: 'Ссылка (опционально)', type: 'url' },
+            {
+              name: 'url',
+              title: 'Ссылка (опционально)',
+              type: 'url',
+            },
             {
               name: 'image',
               title: 'Картинка',
