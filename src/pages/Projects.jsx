@@ -1,29 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { client, urlFor } from '../sanityClient';
-import placeholderImage from '../assets/placeholder.png';
-import '../styles/Partnership.css';
+import React, { useEffect, useState } from "react";
+import Slider from "react-slick";
+import { useTranslation } from "react-i18next";
+import { client, urlFor } from "../sanityClient";
+import placeholderImage from "../assets/placeholder.png";
+
+import "../styles/Projects.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const normalizeLang = (lang) => {
-  if (!lang) return 'ru';
-  if (lang.startsWith('kk') || lang.startsWith('kz')) return 'kk';
-  if (lang.startsWith('en')) return 'en';
-  return 'ru';
+  if (!lang) return "ru";
+  if (lang.startsWith("kk") || lang.startsWith("kz")) return "kk";
+  if (lang.startsWith("en")) return "en";
+  return "ru";
 };
 
-const getLocalizedValue = (field, lang = 'ru') => {
-  if (!field) return '';
-  if (typeof field === 'string') return field;
-  return field[lang] || field.ru || field.kk || field.en || '';
+const getLocalizedValue = (field, lang = "ru") => {
+  if (!field) return "";
+  if (typeof field === "string") return field;
+  return field[lang] || field.ru || field.kk || field.en || "";
 };
 
-const getLocalizedArray = (field, lang = 'ru') => {
-  if (!field) return [];
-  if (Array.isArray(field)) return field;
-  return field[lang] || field.ru || field.kk || field.en || [];
-};
-
-function Partnership({ lang: propLang }) {
+function Projects({ lang: propLang }) {
   const { i18n } = useTranslation();
   const lang = propLang || normalizeLang(i18n.language);
 
@@ -32,26 +30,19 @@ function Partnership({ lang: propLang }) {
   useEffect(() => {
     client
       .fetch(`
-        *[_type == "pagePartnership"][0]{
+        *[_type == "pageProjects"][0]{
           heroTitle,
           heroSubtitle,
-
-          firstSectionTitle,
-          firstSectionSubtitle,
-          firstSectionPoints,
-          firstSectionImage,
-
-          secondSectionTitle,
-          secondSectionSubtitle,
-          secondSectionPoints,
-
-          thirdSectionTitle,
-          thirdSectionSubtitle,
-          thirdSectionPoints,
-          thirdSectionImage,
-
-          finalSectionTitle,
-          finalSectionPoints
+          projectsTitle,
+          projectsSubtitle,
+          projects[]{
+            _key,
+            title,
+            description,
+            image,
+            linkText,
+            linkUrl
+          }
         }
       `)
       .then((data) => setPage(data || null))
@@ -62,119 +53,140 @@ function Partnership({ lang: propLang }) {
     return null;
   }
 
-  const firstSectionPoints = getLocalizedArray(page.firstSectionPoints, lang);
-  const secondSectionPoints = getLocalizedArray(page.secondSectionPoints, lang);
-  const thirdSectionPoints = getLocalizedArray(page.thirdSectionPoints, lang);
-  const finalSectionPoints = getLocalizedArray(page.finalSectionPoints, lang);
+  const projects = Array.isArray(page.projects) ? page.projects : [];
 
-  const firstSectionImage = page.firstSectionImage
-    ? urlFor(page.firstSectionImage).width(1200).url()
-    : placeholderImage;
-
-  const thirdSectionImage = page.thirdSectionImage
-    ? urlFor(page.thirdSectionImage).width(1200).url()
-    : placeholderImage;
+  const sliderSettings = {
+    dots: projects.length > 1,
+    arrows: projects.length > 1,
+    infinite: projects.length > 1,
+    speed: 280,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: false,
+    adaptiveHeight: false,
+    centerMode: projects.length > 1,
+    centerPadding: "120px",
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          centerMode: false,
+          centerPadding: "0px",
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          centerMode: false,
+          centerPadding: "0px",
+          arrows: false,
+          dots: projects.length > 1,
+        },
+      },
+    ],
+  };
 
   return (
-    <main className="partnership-page">
-      <header className="partnership-hero">
-        <div className="partnership-container">
+    <main className="projects-page">
+      <header className="projects-hero">
+        <div className="projects-container">
           <h1>{getLocalizedValue(page.heroTitle, lang)}</h1>
+
           {getLocalizedValue(page.heroSubtitle, lang) && (
             <p>{getLocalizedValue(page.heroSubtitle, lang)}</p>
           )}
         </div>
       </header>
 
-      <section className="partnership-section partnership-section-with-image">
-        <div className="partnership-container partnership-grid">
-          <div className="partnership-text">
-            <h2>{getLocalizedValue(page.firstSectionTitle, lang)}</h2>
+      <section className="projects-section">
+        <div className="projects-container">
+          {(getLocalizedValue(page.projectsTitle, lang) ||
+            getLocalizedValue(page.projectsSubtitle, lang)) && (
+            <div className="projects-section-heading">
+              {getLocalizedValue(page.projectsTitle, lang) && (
+                <h2>{getLocalizedValue(page.projectsTitle, lang)}</h2>
+              )}
 
-            {getLocalizedValue(page.firstSectionSubtitle, lang) && (
-              <p className="partnership-subtitle">
-                {getLocalizedValue(page.firstSectionSubtitle, lang)}
+              {getLocalizedValue(page.projectsSubtitle, lang) && (
+                <p>{getLocalizedValue(page.projectsSubtitle, lang)}</p>
+              )}
+            </div>
+          )}
+
+          {projects.length > 0 ? (
+            <div className="projects-slider-wrap">
+              <Slider {...sliderSettings} className="projects-slider">
+                {projects.map((project, index) => {
+                  const imageUrl = project?.image
+                    ? urlFor(project.image).width(1400).height(900).fit("crop").url()
+                    : placeholderImage;
+
+                  const title = getLocalizedValue(project?.title, lang);
+                  const description = getLocalizedValue(project?.description, lang);
+                  const linkText =
+                    getLocalizedValue(project?.linkText, lang) ||
+                    (lang === "en"
+                      ? "Learn more"
+                      : lang === "kk"
+                      ? "Толығырақ"
+                      : "Подробнее");
+
+                  return (
+                    <div key={project?._key || index} className="project-slide">
+                      <article className="project-card">
+                        <div className="project-image-wrap">
+                          <img
+                            src={imageUrl}
+                            alt={title || `Project ${index + 1}`}
+                            className="project-image"
+                          />
+                        </div>
+
+                        <div className="project-content">
+                          <div className="project-top">
+                            <span className="project-index">
+                              {String(index + 1).padStart(2, "0")}
+                            </span>
+
+                            {title && <h3>{title}</h3>}
+
+                            {description && (
+                              <p className="project-description">{description}</p>
+                            )}
+                          </div>
+
+                          {project?.linkUrl && (
+                            <a
+                              href={project.linkUrl}
+                              className="project-link"
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              {linkText}
+                            </a>
+                          )}
+                        </div>
+                      </article>
+                    </div>
+                  );
+                })}
+              </Slider>
+            </div>
+          ) : (
+            <div className="projects-empty">
+              <p>
+                {lang === "en"
+                  ? "No projects added yet."
+                  : lang === "kk"
+                  ? "Жобалар әлі қосылмаған."
+                  : "Проекты пока не добавлены."}
               </p>
-            )}
-
-            <ul className="partnership-points">
-              {firstSectionPoints.map((item, index) => (
-                <li key={index}>{item}</li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="partnership-image-wrap">
-            <img
-              src={firstSectionImage}
-              alt={getLocalizedValue(page.firstSectionTitle, lang) || 'Partnership'}
-              className="partnership-image"
-            />
-          </div>
-        </div>
-      </section>
-
-      <section className="partnership-section">
-        <div className="partnership-container">
-          <div className="partnership-text">
-            <h2>{getLocalizedValue(page.secondSectionTitle, lang)}</h2>
-
-            {getLocalizedValue(page.secondSectionSubtitle, lang) && (
-              <p className="partnership-subtitle">
-                {getLocalizedValue(page.secondSectionSubtitle, lang)}
-              </p>
-            )}
-
-            <ul className="partnership-points">
-              {secondSectionPoints.map((item, index) => (
-                <li key={index}>{item}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section className="partnership-section partnership-section-with-image">
-        <div className="partnership-container partnership-grid">
-          <div className="partnership-text">
-            <h2>{getLocalizedValue(page.thirdSectionTitle, lang)}</h2>
-
-            {getLocalizedValue(page.thirdSectionSubtitle, lang) && (
-              <p className="partnership-subtitle">
-                {getLocalizedValue(page.thirdSectionSubtitle, lang)}
-              </p>
-            )}
-
-            <ul className="partnership-points">
-              {thirdSectionPoints.map((item, index) => (
-                <li key={index}>{item}</li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="partnership-image-wrap">
-            <img
-              src={thirdSectionImage}
-              alt={getLocalizedValue(page.thirdSectionTitle, lang) || 'Partnership'}
-              className="partnership-image"
-            />
-          </div>
-        </div>
-      </section>
-
-      <section className="partnership-final-section">
-        <div className="partnership-container">
-          <h2>{getLocalizedValue(page.finalSectionTitle, lang)}</h2>
-
-          <ul className="partnership-points partnership-points-final">
-            {finalSectionPoints.map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ul>
+            </div>
+          )}
         </div>
       </section>
     </main>
   );
 }
 
-export default Partnership;
+export default Projects;

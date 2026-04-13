@@ -1,96 +1,84 @@
-export default {
-  name: 'pagePartnership',
-  title: 'Страница партнёрства',
-  type: 'document',
+const localizedString = (name, title) => ({
+  name,
+  title,
+  type: 'object',
+  fields: [
+    { name: 'ru', title: 'Русский', type: 'string' },
+    { name: 'kk', title: 'Қазақша', type: 'string' },
+    { name: 'en', title: 'English', type: 'string' },
+  ],
+});
+
+const localizedText = (name, title) => ({
+  name,
+  title,
+  type: 'object',
+  fields: [
+    { name: 'ru', title: 'Русский', type: 'text', rows: 4 },
+    { name: 'kk', title: 'Қазақша', type: 'text', rows: 4 },
+    { name: 'en', title: 'English', type: 'text', rows: 4 },
+  ],
+});
+
+const localizedStringArray = (name, title) => ({
+  name,
+  title,
+  type: 'object',
   fields: [
     {
-      name: 'heroTitle',
-      title: '1. Заголовок',
-      type: 'localeString',
+      name: 'ru',
+      title: 'Русский',
+      type: 'array',
+      of: [{ type: 'string' }],
     },
     {
-      name: 'heroSubtitle',
-      title: '2. Подзаголовок',
-      type: 'localeText',
-    },
-
-    {
-      name: 'firstSectionTitle',
-      title: '3. Первый блок — заголовок',
-      type: 'localeString',
+      name: 'kk',
+      title: 'Қазақша',
+      type: 'array',
+      of: [{ type: 'string' }],
     },
     {
-      name: 'firstSectionSubtitle',
-      title: '4. Первый блок — подзаголовок',
-      type: 'localeText',
-    },
-    {
-      name: 'firstSectionPoints',
-      title: '5. Первый блок — 2 пункта',
-      type: 'localizedArrayString',
-    },
-    {
-      name: 'firstSectionImage',
-      title: '6. Первый блок — картинка',
-      type: 'image',
-      options: { hotspot: true },
-    },
-
-    {
-      name: 'secondSectionTitle',
-      title: '7. Второй блок — заголовок',
-      type: 'localeString',
-    },
-    {
-      name: 'secondSectionSubtitle',
-      title: '8. Второй блок — подзаголовок',
-      type: 'localeText',
-    },
-    {
-      name: 'secondSectionPoints',
-      title: '9. Второй блок — 2 пункта',
-      type: 'localizedArrayString',
-    },
-
-    {
-      name: 'thirdSectionTitle',
-      title: '10. Третий блок — заголовок',
-      type: 'localeString',
-    },
-    {
-      name: 'thirdSectionSubtitle',
-      title: '11. Третий блок — подзаголовок',
-      type: 'localeText',
-    },
-    {
-      name: 'thirdSectionPoints',
-      title: '12. Третий блок — 2 пункта',
-      type: 'localizedArrayString',
-    },
-    {
-      name: 'thirdSectionImage',
-      title: '13. Третий блок — картинка',
-      type: 'image',
-      options: { hotspot: true },
-    },
-
-    {
-      name: 'finalSectionTitle',
-      title: '14. Финальный блок — заголовок',
-      type: 'localeString',
-    },
-    {
-      name: 'finalSectionPoints',
-      title: '15. Финальный блок — 5 пунктов',
-      type: 'localizedArrayString',
+      name: 'en',
+      title: 'English',
+      type: 'array',
+      of: [{ type: 'string' }],
     },
   ],
+});
 
-  preview: {
-    prepare() {
-      return {
-        title: 'Страница партнёрства',
-      };
+export default {
+  name: 'pagePartnership',
+  title: 'Страница Partnership',
+  type: 'document',
+  fields: [
+    localizedString('heroTitle', 'Заголовок hero'),
+    localizedText('heroSubtitle', 'Подзаголовок hero'),
+
+    localizedString('firstSectionTitle', 'Заголовок 1 блока'),
+    localizedText('firstSectionSubtitle', 'Подзаголовок 1 блока'),
+    localizedStringArray('firstSectionPoints', 'Пункты 1 блока'),
+    {
+      name: 'firstSectionImage',
+      title: 'Изображение 1 блока',
+      type: 'image',
+      options: { hotspot: true },
     },
-  },
+
+    localizedString('secondSectionTitle', 'Заголовок 2 блока'),
+    localizedText('secondSectionSubtitle', 'Подзаголовок 2 блока'),
+    localizedStringArray('secondSectionPoints', 'Пункты 2 блока'),
+
+    localizedString('thirdSectionTitle', 'Заголовок 3 блока'),
+    localizedText('thirdSectionSubtitle', 'Подзаголовок 3 блока'),
+    localizedStringArray('thirdSectionPoints', 'Пункты 3 блока'),
+    {
+      name: 'thirdSectionImage',
+      title: 'Изображение 3 блока',
+      type: 'image',
+      options: { hotspot: true },
+    },
+
+    localizedString('finalSectionTitle', 'Заголовок финального блока'),
+    localizedStringArray('finalSectionPoints', 'Пункты финального блока'),
+  ],
 };

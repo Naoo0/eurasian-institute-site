@@ -1,117 +1,70 @@
-export default {
-  name: 'project',
-  title: 'Проект',
-  type: 'document',
+const localizedString = (name, title) => ({
+  name,
+  title,
+  type: "object",
   fields: [
+    { name: "ru", title: "Русский", type: "string" },
+    { name: "kk", title: "Қазақша", type: "string" },
+    { name: "en", title: "English", type: "string" },
+  ],
+});
+
+const localizedText = (name, title) => ({
+  name,
+  title,
+  type: "object",
+  fields: [
+    { name: "ru", title: "Русский", type: "text", rows: 4 },
+    { name: "kk", title: "Қазақша", type: "text", rows: 4 },
+    { name: "en", title: "English", type: "text", rows: 4 },
+  ],
+});
+
+export default {
+  name: "pageProjects",
+  title: "Страница Projects",
+  type: "document",
+  fields: [
+    localizedString("heroTitle", "Заголовок hero"),
+    localizedText("heroSubtitle", "Подзаголовок hero"),
+
+    localizedString("projectsTitle", "Заголовок секции проектов"),
+    localizedText("projectsSubtitle", "Подзаголовок секции проектов"),
+
     {
-      name: 'title',
-      title: 'Название проекта',
-      type: 'object',
-      fields: [
-        { name: 'ru', title: 'Русский', type: 'string' },
-        { name: 'kk', title: 'Қазақша', type: 'string' },
-        { name: 'en', title: 'English', type: 'string' },
-      ],
-    },
-    {
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: {
-        source: (doc) =>
-          doc?.title?.en || doc?.title?.ru || doc?.title?.kk || 'project',
-        maxLength: 96,
-      },
-    },
-    {
-      name: 'tag',
-      title: 'Тег / программа',
-      type: 'object',
-      fields: [
-        { name: 'ru', title: 'Русский', type: 'string' },
-        { name: 'kk', title: 'Қазақша', type: 'string' },
-        { name: 'en', title: 'English', type: 'string' },
-      ],
-    },
-    {
-      name: 'order',
-      title: 'Порядок в слайдере',
-      type: 'number',
-      description: 'Меньше число — раньше в слайдере',
-    },
-    {
-      name: 'image',
-      title: 'Картинка проекта',
-      type: 'image',
-      options: { hotspot: true },
-    },
-    {
-      name: 'paragraphs',
-      title: 'Основной текст (абзацы)',
-      type: 'object',
-      fields: [
+      name: "projects",
+      title: "Проекты",
+      type: "array",
+      validation: (Rule) => Rule.required().min(1).max(3),
+      of: [
         {
-          name: 'ru',
-          title: 'Русский',
-          type: 'array',
-          of: [{ type: 'text' }],
+          type: "object",
+          title: "Проект",
+          fields: [
+            localizedString("title", "Название проекта"),
+            localizedText("description", "Описание"),
+            {
+              name: "image",
+              title: "Изображение",
+              type: "image",
+              options: { hotspot: true },
+            },
+            localizedString("linkText", "Текст кнопки"),
+            {
+              name: "linkUrl",
+              title: "Ссылка",
+              type: "url",
+            },
+          ],
+          preview: {
+            select: {
+              title: "title.ru",
+              subtitle: "title.en",
+              media: "image",
+            },
+          },
         },
-        {
-          name: 'kk',
-          title: 'Қазақша',
-          type: 'array',
-          of: [{ type: 'text' }],
-        },
-        {
-          name: 'en',
-          title: 'English',
-          type: 'array',
-          of: [{ type: 'text' }],
-        },
-      ],
-    },
-    {
-      name: 'bullets',
-      title: 'Ключевые пункты',
-      type: 'object',
-      fields: [
-        {
-          name: 'ru',
-          title: 'Русский',
-          type: 'array',
-          of: [{ type: 'string' }],
-        },
-        {
-          name: 'kk',
-          title: 'Қазақша',
-          type: 'array',
-          of: [{ type: 'string' }],
-        },
-        {
-          name: 'en',
-          title: 'English',
-          type: 'array',
-          of: [{ type: 'string' }],
-        },
-      ],
-    },
-    {
-      name: 'footer',
-      title: 'Финальный абзац / вывод',
-      type: 'object',
-      fields: [
-        { name: 'ru', title: 'Русский', type: 'text' },
-        { name: 'kk', title: 'Қазақша', type: 'text' },
-        { name: 'en', title: 'English', type: 'text' },
       ],
     },
   ],
-
-  preview: {
-    select: {
-      title: 'title.ru',
-      subtitle: 'tag.ru',
-      media: 'image',
-    },
-  },
 };
