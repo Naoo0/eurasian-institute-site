@@ -18,7 +18,7 @@ function Footer() {
     <footer className="site-footer">
       <div className="footer-content">
         <div className="footer-left">
-          <h3>Institute for Interdisciplinary Studies</h3>
+          <h3>Eurasian Institute for Interdisciplinary Studies</h3>
           <p className="footer-text">
             Research, publications, and academic initiatives.
           </p>
