@@ -15,7 +15,7 @@ function Header({ lang, setLang }) {
       logoAlt: "Логотип Eurasian Institute",
     },
     kz: {
-      title: "Пәнаралық Зерттеулердің Еуразиялық Институты",
+      title: "Еуразиялық Пәнаралық Зерттеулер Институты",
       subscribe: "Жазылу",
       logoAlt: "Eurasian Institute логотипі",
     },

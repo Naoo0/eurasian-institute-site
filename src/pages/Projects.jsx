@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { useTranslation } from "react-i18next";
+import "../styles/Projects.css";
+
 import { client, urlFor } from "../sanityClient";
 import placeholderImage from "../assets/placeholder.png";
 
-import "../styles/Projects.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -18,160 +19,181 @@ const normalizeLang = (lang) => {
 const getLocalizedValue = (field, lang = "ru") => {
   if (!field) return "";
   if (typeof field === "string") return field;
-  return field[lang] || field.ru || field.kk || field.en || "";
+  return field[lang] || field.ru || field.kk || field.kz || field.en || "";
 };
 
-function Projects({ lang: propLang }) {
+const getLocalizedArray = (field, lang = "ru") => {
+  if (!field) return [];
+  if (Array.isArray(field)) return field;
+  return field[lang] || field.ru || field.kk || field.kz || field.en || [];
+};
+
+const sliderSettings = {
+  dots: false,
+  arrows: true,
+  infinite: true,
+  speed: 280,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  autoplay: false,
+  adaptiveHeight: false,
+  centerMode: true,
+  centerPadding: "100px",
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        centerMode: false,
+        centerPadding: "0px",
+      },
+    },
+    {
+      breakpoint: 768,
+      settings: {
+        centerMode: false,
+        centerPadding: "0px",
+        arrows: false,
+      },
+    },
+  ],
+};
+
+const Projects = () => {
   const { i18n } = useTranslation();
-  const lang = propLang || normalizeLang(i18n.language);
+  const lang = normalizeLang(i18n.language);
 
   const [page, setPage] = useState(null);
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     client
       .fetch(`
-        *[_type == "pageProjects"][0]{
-          heroTitle,
-          heroSubtitle,
-          projects[]{
-            _key,
+        {
+          "page": *[_type == "pageProjects"][0]{
+            heroTitle,
+            heroSubtitle
+          },
+          "projects": *[_type == "project"] | order(order asc){
+            _id,
             title,
-            description,
+            tag,
             image,
-            linkText,
-            linkUrl
+            paragraphs,
+            bullets,
+            footer
           }
         }
       `)
-      .then((data) => setPage(data || null))
-      .catch(console.error);
+      .then((data) => {
+        setPage(data?.page || null);
+        setProjects(data?.projects || []);
+      })
+      .catch((err) => {
+        console.error("Error loading projects:", err);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
-  if (!page) {
-    return null;
-  }
+  const heroTitle =
+    getLocalizedValue(page?.heroTitle, lang) ||
+    (lang === "en"
+      ? "Key International Projects"
+      : lang === "kk"
+      ? "Негізгі халықаралық жобалар"
+      : "Ключевые международные проекты");
 
-  const projects = Array.isArray(page.projects) ? page.projects : [];
-
-  const sliderSettings = {
-    dots: projects.length > 1,
-    arrows: projects.length > 1,
-    infinite: projects.length > 1,
-    speed: 280,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: false,
-    adaptiveHeight: false,
-    centerMode: projects.length > 1,
-    centerPadding: "70px",
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          centerMode: false,
-          centerPadding: "0px",
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          centerMode: false,
-          centerPadding: "0px",
-          arrows: false,
-          dots: projects.length > 1,
-        },
-      },
-    ],
-  };
+  const heroSubtitle =
+    getLocalizedValue(page?.heroSubtitle, lang) ||
+    (lang === "en"
+      ? "The Institute participates in international research consortia and collaborative academic initiatives."
+      : lang === "kk"
+      ? "Институт халықаралық зерттеу консорциумдары мен академиялық ынтымақтастық бастамаларына қатысады."
+      : "Институт участвует в международных исследовательских консорциумах и совместных академических инициативах.");
 
   return (
-    <main className="projects-page">
-      <header className="projects-hero">
-        <div className="projects-container">
-          <h1>{getLocalizedValue(page.heroTitle, lang)}</h1>
-
-          {getLocalizedValue(page.heroSubtitle, lang) && (
-            <p>{getLocalizedValue(page.heroSubtitle, lang)}</p>
-          )}
-        </div>
+    <div className="projects-page">
+      <header className="projects-header">
+        <h1>{heroTitle}</h1>
+        <p>{heroSubtitle}</p>
       </header>
 
-      <section className="projects-section">
-        <div className="projects-container">
-          {projects.length > 0 ? (
-            <div className="projects-slider-wrap">
-              <Slider {...sliderSettings} className="projects-slider">
-                {projects.map((project, index) => {
-                  const imageUrl = project?.image
-                    ? urlFor(project.image).width(1400).height(700).fit("crop").url()
-                    : placeholderImage;
+      <div className="projects-slider-wrapper">
+        {loading && (
+          <p className="projects-status">
+            {lang === "en"
+              ? "Loading projects..."
+              : lang === "kk"
+              ? "Жобалар жүктелуде..."
+              : "Загрузка проектов..."}
+          </p>
+        )}
 
-                  const title = getLocalizedValue(project?.title, lang);
-                  const description = getLocalizedValue(project?.description, lang);
-                  const linkText =
-                    getLocalizedValue(project?.linkText, lang) ||
-                    (lang === "en"
-                      ? "Learn more"
-                      : lang === "kk"
-                      ? "Толығырақ"
-                      : "Подробнее");
+        {!loading && !projects.length && (
+          <p className="projects-status">
+            {lang === "en"
+              ? "Projects have not been added yet."
+              : lang === "kk"
+              ? "Жобалар әлі қосылмаған."
+              : "Проекты ещё не добавлены."}
+          </p>
+        )}
 
-                  return (
-                    <div key={project?._key || index} className="project-slide">
-                      <article className="project-card">
-                        <div className="project-image-wrap">
-                          <img
-                            src={imageUrl}
-                            alt={title || `Project ${index + 1}`}
-                            className="project-image"
-                          />
-                        </div>
+        {!loading && projects.length > 0 && (
+          <Slider {...sliderSettings}>
+            {projects.map((project) => {
+              const title = getLocalizedValue(project.title, lang);
+              const tag = getLocalizedValue(project.tag, lang);
+              const paragraphs = getLocalizedArray(project.paragraphs, lang);
+              const bullets = getLocalizedArray(project.bullets, lang);
+              const footer = getLocalizedValue(project.footer, lang);
 
-                        <div className="project-content">
-                          <div className="project-top">
-                            <span className="project-index">
-                              {String(index + 1).padStart(2, "0")}
-                            </span>
-
-                            {title && <h3>{title}</h3>}
-
-                            {description && (
-                              <p className="project-description">{description}</p>
-                            )}
-                          </div>
-
-                          {project?.linkUrl && (
-                            <a
-                              href={project.linkUrl}
-                              className="project-link"
-                              target="_blank"
-                              rel="noreferrer"
-                            >
-                              {linkText}
-                            </a>
-                          )}
-                        </div>
-                      </article>
+              return (
+                <div key={project._id} className="project-slide">
+                  <article className="project-card">
+                    <div className="project-card-header">
+                      {tag && <span className="project-tag">{tag}</span>}
+                      <h2 className="project-title">{title}</h2>
                     </div>
-                  );
-                })}
-              </Slider>
-            </div>
-          ) : (
-            <div className="projects-empty">
-              <p>
-                {lang === "en"
-                  ? "No projects added yet."
-                  : lang === "kk"
-                  ? "Жобалар әлі қосылмаған."
-                  : "Проекты пока не добавлены."}
-              </p>
-            </div>
-          )}
-        </div>
-      </section>
-    </main>
+
+                    <div className="project-image-wrapper">
+                      <img
+                        src={
+                          project.image
+                            ? urlFor(project.image).width(1200).height(700).fit("crop").url()
+                            : placeholderImage
+                        }
+                        alt={title}
+                        className="project-image"
+                      />
+                    </div>
+
+                    <div className="project-body">
+                      {paragraphs.map((text, idx) => (
+                        <p key={idx}>{text}</p>
+                      ))}
+
+                      {bullets.length > 0 && (
+                        <ul className="project-bullets">
+                          {bullets.map((item, idx) => (
+                            <li key={idx}>{item}</li>
+                          ))}
+                        </ul>
+                      )}
+
+                      {footer && (
+                        <p className="project-footer-text">{footer}</p>
+                      )}
+                    </div>
+                  </article>
+                </div>
+              );
+            })}
+          </Slider>
+        )}
+      </div>
+    </div>
   );
-}
+};
 
 export default Projects;
