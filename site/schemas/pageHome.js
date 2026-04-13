@@ -1,139 +1,125 @@
 export default {
-  name: "pageHome",
+  name: 'pageHome',
   title: 'Главная страница',
-  type: "document",
+  type: 'document',
   fields: [
     {
-      name: "heroTitle",
-      title: "Заголовок hero-блока",
-      type: "localeString",
+      name: 'heroTitle',
+      title: 'Заголовок hero-блока',
+      type: 'localeString',
     },
     {
-      name: "heroSubtitle",
-      title: "Подзаголовок hero-блока",
-      type: "localeText",
-    },
-    {
-      name: "heroPrimaryButtonText",
-      title: "Текст главной кнопки",
-      type: "localeString",
-    },
-    {
-      name: "heroPrimaryButtonLink",
-      title: "Ссылка главной кнопки",
-      type: "string",
-      description: 'Например: /about или /projects',
-    },
-    {
-      name: "heroSecondaryButtonText",
-      title: "Текст второй кнопки",
-      type: "localeString",
-    },
-    {
-      name: "heroSecondaryButtonLink",
-      title: "Ссылка второй кнопки",
-      type: "string",
-      description: 'Например: /partnership',
+      name: 'heroSubtitle',
+      title: 'Подзаголовок hero-блока',
+      type: 'localeText',
     },
 
     {
-      name: "introTitle",
-      title: "Заголовок блока о нас",
-      type: "localeString",
+      name: 'historyTitle',
+      title: 'Заголовок блока истории',
+      type: 'localeString',
     },
     {
-      name: "introText",
-      title: "Текст блока о нас",
-      type: "localeText",
+      name: 'historySubtitle',
+      title: 'Подзаголовок блока истории',
+      type: 'localeString',
     },
     {
-      name: "introImage",
-      title: "Изображение блока о нас",
-      type: "image",
-      options: { hotspot: true },
+      name: 'historyParagraphs',
+      title: 'Абзацы истории',
+      type: 'localizedArrayText',
     },
 
     {
-      name: "directionsSectionTitle",
-      title: "Заголовок секции направлений",
-      type: "localeString",
+      name: 'missionSectionTitle',
+      title: 'Заголовок секции "Миссия и видение"',
+      type: 'localeString',
     },
     {
-      name: "directions",
-      title: "Направления",
-      type: "array",
+      name: 'missionItems',
+      title: 'Пункты "Миссия и видение"',
+      type: 'array',
       of: [
         {
-          type: "object",
+          type: 'object',
           fields: [
-            {
-              name: "title",
-              title: "Заголовок",
-              type: "localeString",
-            },
-            {
-              name: "body",
-              title: "Текст",
-              type: "localeText",
-            },
+            { name: 'title', title: 'Заголовок пункта', type: 'localeString' },
+            { name: 'body', title: 'Текст пункта', type: 'localeText' },
           ],
         },
       ],
     },
 
     {
-      name: "valuesSectionTitle",
-      title: "Заголовок секции ценностей",
-      type: "localeString",
+      name: 'structureSectionTitle',
+      title: 'Заголовок блока "Структура института"',
+      type: 'localeString',
     },
     {
-      name: "values",
-      title: "Ценности",
-      type: "array",
+      name: 'structureText',
+      title: 'Текст блока "Структура института"',
+      type: 'localeText',
+    },
+
+    {
+      name: 'valuesSectionTitle',
+      title: 'Заголовок секции "Наши ценности"',
+      type: 'localeString',
+    },
+    {
+      name: 'values',
+      title: 'Наши ценности',
+      type: 'array',
       of: [
         {
-          type: "object",
+          type: 'object',
           fields: [
             {
-              name: "icon",
-              title: "Иконка (эмодзи или короткий текст)",
-              type: "string",
+              name: 'icon',
+              title: 'Иконка (эмодзи или короткий текст)',
+              type: 'string',
             },
-            {
-              name: "title",
-              title: "Заголовок",
-              type: "localeString",
-            },
-            {
-              name: "body",
-              title: "Текст",
-              type: "localeText",
-            },
+            { name: 'title', title: 'Заголовок', type: 'localeString' },
+            { name: 'body', title: 'Текст', type: 'localeText' },
           ],
         },
       ],
     },
 
     {
-      name: "partnershipTitle",
-      title: "Заголовок CTA-блока",
-      type: "localeString",
+      name: 'partnersSectionTitle',
+      title: 'Заголовок секции партнёров',
+      type: 'localeString',
     },
     {
-      name: "partnershipText",
-      title: "Текст CTA-блока",
-      type: "localeText",
+      name: 'partnersIntro',
+      title: 'Текст перед блоком партнёров',
+      type: 'localeText',
     },
     {
-      name: "partnershipButtonText",
-      title: "Текст кнопки CTA",
-      type: "localeString",
+      name: 'keyProjectsTitle',
+      title: 'Заголовок "Ключевые международные проекты"',
+      type: 'localeString',
     },
     {
-      name: "partnershipButtonLink",
-      title: "Ссылка кнопки CTA",
-      type: "string",
-      description: 'Например: /partnership',
+      name: 'partners',
+      title: 'Партнёры',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            { name: 'name', title: 'Название', type: 'localeString' },
+            { name: 'url', title: 'Ссылка', type: 'url' },
+            {
+              name: 'logo',
+              title: 'Логотип',
+              type: 'image',
+              options: { hotspot: true },
+            },
+          ],
+        },
+      ],
     },
   ],
 };
