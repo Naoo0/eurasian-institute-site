@@ -5,18 +5,18 @@
 }
 
 .projects-container {
-  width: min(1200px, calc(100% - 32px));
+  width: min(1360px, calc(100% - 24px));
   margin: 0 auto;
 }
 
 .projects-hero {
-  padding: 72px 0 36px;
+  padding: 64px 0 26px;
   background: linear-gradient(180deg, #f7f7f5 0%, #efeee9 100%);
 }
 
 .projects-hero h1 {
-  margin: 0 0 16px;
-  font-size: clamp(2rem, 4vw, 3.6rem);
+  margin: 0 0 14px;
+  font-size: clamp(2rem, 4vw, 3.4rem);
   line-height: 1.06;
   font-weight: 700;
   letter-spacing: -0.03em;
@@ -25,34 +25,14 @@
 .projects-hero p {
   max-width: 760px;
   margin: 0;
-  font-size: 1.05rem;
+  font-size: 1.02rem;
   line-height: 1.7;
   color: #4c4c4c;
 }
 
 .projects-section {
-  padding: 24px 0 88px;
+  padding: 10px 0 72px;
   overflow: hidden;
-}
-
-.projects-section-heading {
-  margin-bottom: 34px;
-}
-
-.projects-section-heading h2 {
-  margin: 0 0 12px;
-  font-size: clamp(1.7rem, 3vw, 2.6rem);
-  line-height: 1.1;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-.projects-section-heading p {
-  margin: 0;
-  max-width: 760px;
-  font-size: 1rem;
-  line-height: 1.7;
-  color: #5d5d5d;
 }
 
 .projects-slider-wrap {
@@ -71,8 +51,8 @@
 
 .projects-slider .slick-slide {
   height: inherit !important;
-  padding: 12px;
-  opacity: 0.55;
+  padding: 10px;
+  opacity: 0.52;
   transition: opacity 0.28s ease, transform 0.28s ease;
 }
 
@@ -87,8 +67,8 @@
 
 .project-card {
   display: grid;
-  grid-template-columns: 1.05fr 1fr;
-  min-height: 500px;
+  grid-template-columns: 1.35fr 0.95fr;
+  min-height: 400px;
   height: 100%;
   background: #ffffff;
   border-radius: 28px;
@@ -99,8 +79,8 @@
 
 .projects-slider .slick-center .project-card,
 .projects-slider .slick-current .project-card {
-  transform: translateY(-4px);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.12);
+  transform: translateY(-3px);
+  box-shadow: 0 22px 56px rgba(0, 0, 0, 0.12);
 }
 
 .project-image-wrap {
@@ -112,7 +92,7 @@
 .project-image {
   width: 100%;
   height: 100%;
-  min-height: 500px;
+  min-height: 400px;
   object-fit: cover;
   display: block;
 }
@@ -121,14 +101,14 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 28px;
-  padding: 42px 40px;
+  gap: 22px;
+  padding: 28px 28px;
 }
 
 .project-top {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 14px;
 }
 
 .project-index {
@@ -145,7 +125,7 @@
 
 .project-content h3 {
   margin: 0;
-  font-size: clamp(1.45rem, 2.2vw, 2.1rem);
+  font-size: clamp(1.35rem, 2vw, 1.9rem);
   line-height: 1.15;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -153,8 +133,8 @@
 
 .project-description {
   margin: 0;
-  font-size: 1rem;
-  line-height: 1.75;
+  font-size: 0.98rem;
+  line-height: 1.65;
   color: #4c4c4c;
   white-space: pre-line;
 }
@@ -165,7 +145,7 @@
   justify-content: center;
   width: fit-content;
   min-width: 160px;
-  padding: 14px 22px;
+  padding: 13px 20px;
   border-radius: 999px;
   background: #111;
   color: #fff;
@@ -197,11 +177,11 @@
 }
 
 .projects-slider .slick-prev {
-  left: -8px;
+  left: -2px;
 }
 
 .projects-slider .slick-next {
-  right: -8px;
+  right: -2px;
 }
 
 .projects-slider .slick-prev:before,
@@ -212,7 +192,7 @@
 }
 
 .projects-slider .slick-dots {
-  bottom: -30px;
+  bottom: -28px;
 }
 
 .projects-slider .slick-dots li button:before {
@@ -227,11 +207,11 @@
 
 @media (max-width: 1024px) {
   .projects-hero {
-    padding: 56px 0 28px;
+    padding: 50px 0 22px;
   }
 
   .projects-section {
-    padding: 12px 0 72px;
+    padding: 8px 0 60px;
   }
 
   .project-card {
@@ -240,28 +220,27 @@
   }
 
   .project-image {
-    min-height: 340px;
+    min-height: 300px;
   }
 
   .project-content {
-    padding: 30px 26px;
+    padding: 24px 22px;
   }
 }
 
 @media (max-width: 768px) {
   .projects-container {
-    width: min(100%, calc(100% - 20px));
+    width: min(100%, calc(100% - 18px));
   }
 
   .projects-hero h1 {
-    font-size: 2rem;
+    font-size: 1.9rem;
   }
 
   .projects-hero p,
-  .projects-section-heading p,
   .project-description {
     font-size: 0.96rem;
-    line-height: 1.65;
+    line-height: 1.62;
   }
 
   .projects-slider .slick-slide {
@@ -274,16 +253,16 @@
   }
 
   .project-image {
-    min-height: 240px;
+    min-height: 220px;
   }
 
   .project-content {
-    padding: 22px 18px;
-    gap: 22px;
+    padding: 20px 16px;
+    gap: 18px;
   }
 
   .project-content h3 {
-    font-size: 1.35rem;
+    font-size: 1.28rem;
   }
 
   .project-link {

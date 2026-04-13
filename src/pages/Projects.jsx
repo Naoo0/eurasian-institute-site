@@ -33,8 +33,6 @@ function Projects({ lang: propLang }) {
         *[_type == "pageProjects"][0]{
           heroTitle,
           heroSubtitle,
-          projectsTitle,
-          projectsSubtitle,
           projects[]{
             _key,
             title,
@@ -65,7 +63,7 @@ function Projects({ lang: propLang }) {
     autoplay: false,
     adaptiveHeight: false,
     centerMode: projects.length > 1,
-    centerPadding: "120px",
+    centerPadding: "70px",
     responsive: [
       {
         breakpoint: 1024,
@@ -100,25 +98,12 @@ function Projects({ lang: propLang }) {
 
       <section className="projects-section">
         <div className="projects-container">
-          {(getLocalizedValue(page.projectsTitle, lang) ||
-            getLocalizedValue(page.projectsSubtitle, lang)) && (
-            <div className="projects-section-heading">
-              {getLocalizedValue(page.projectsTitle, lang) && (
-                <h2>{getLocalizedValue(page.projectsTitle, lang)}</h2>
-              )}
-
-              {getLocalizedValue(page.projectsSubtitle, lang) && (
-                <p>{getLocalizedValue(page.projectsSubtitle, lang)}</p>
-              )}
-            </div>
-          )}
-
           {projects.length > 0 ? (
             <div className="projects-slider-wrap">
               <Slider {...sliderSettings} className="projects-slider">
                 {projects.map((project, index) => {
                   const imageUrl = project?.image
-                    ? urlFor(project.image).width(1400).height(900).fit("crop").url()
+                    ? urlFor(project.image).width(1400).height(700).fit("crop").url()
                     : placeholderImage;
 
                   const title = getLocalizedValue(project?.title, lang);

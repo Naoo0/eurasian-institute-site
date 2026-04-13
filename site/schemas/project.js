@@ -28,9 +28,6 @@ export default {
     localizedString("heroTitle", "Заголовок hero"),
     localizedText("heroSubtitle", "Подзаголовок hero"),
 
-    localizedString("projectsTitle", "Заголовок секции проектов"),
-    localizedText("projectsSubtitle", "Подзаголовок секции проектов"),
-
     {
       name: "projects",
       title: "Проекты",
