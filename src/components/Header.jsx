@@ -10,12 +10,12 @@ function Header({ lang, setLang }) {
 
   const translations = {
     ru: {
-      title: "Евразийский институт междисциплинарных исследований",
+      title: "Евразийский Институт Междисциплинарных Исследований",
       subscribe: "Подписаться",
       logoAlt: "Логотип Eurasian Institute",
     },
     kz: {
-      title: "Пәнаралық зерттеулердің Еуразиялық институты",
+      title: "Пәнаралық Зерттеулердің Еуразиялық Институты",
       subscribe: "Жазылу",
       logoAlt: "Eurasian Institute логотипі",
     },

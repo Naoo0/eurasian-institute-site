@@ -62,7 +62,7 @@ function Footer() {
       </div>
 
       <div className="footer-bottom">
-        <p>© 2026 Institute for Interdisciplinary Studies</p>
+        <p>© 2026 Eurasian Institute for Interdisciplinary Studies</p>
       </div>
     </footer>
   );
