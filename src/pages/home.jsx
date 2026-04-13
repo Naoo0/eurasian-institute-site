@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import HeroSection from "../components/HeroSection";
-import GridSection from "../components/GridSection";
 import "../styles/Home.css";
 
 import { client, urlFor } from "../sanityClient";
@@ -14,207 +12,169 @@ const normalizeLang = (lang) => {
   return "ru";
 };
 
-const getLocalizedValue = (field, lang) => {
+const getLocalizedValue = (field, lang = "ru") => {
   if (!field) return "";
   if (typeof field === "string") return field;
-  return field[lang] || field.ru || field.kk || field.en || "";
+  return field[lang] || field.ru || field.kk || field.kz || field.en || "";
 };
 
-const homeUiText = {
-  ru: {
-    loading: "Загрузка главной страницы…",
-    imageAlt: "Изображение",
-  },
-  kk: {
-    loading: "Басты бет жүктелуде…",
-    imageAlt: "Сурет",
-  },
-  en: {
-    loading: "Loading homepage…",
-    imageAlt: "Image",
-  },
-};
-
-function Home() {
+const Home = ({ lang: propLang }) => {
   const { i18n } = useTranslation();
-  const lang = normalizeLang(i18n.language);
-  const uiText = homeUiText[lang];
+  const lang = propLang || normalizeLang(i18n.language);
 
-  const [homeData, setHomeData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(null);
 
   useEffect(() => {
     client
-      .fetch(`
-        *[_type == "pageHome"][0]{
-          heroTitle,
-          heroSubtitle,
-          heroImage,
-          introBlocks[]{
-            title,
-            image,
-            reverse
-          },
-          featuredNewsLabel,
-          featuredNews->{
-            _id,
-            title,
-            slug,
-            image,
-            mainImage,
-            excerpt
-          },
-          sidebarCards[]{
-            title,
-            subtitle,
-            url,
-            image
-          },
-          newsletterTitle,
-          newsletterText,
-          newsletterButton
-        }
-      `)
-      .then((data) => {
-        console.log("Home page from Sanity:", data);
-        setHomeData(data || null);
-      })
-      .catch((err) => {
-        console.error("Error loading home page:", err);
-      })
-      .finally(() => setLoading(false));
+      .fetch(`*[_type == "pageHome"][0]{
+        heroTitle,
+        heroSubtitle,
+        heroPrimaryButtonText,
+        heroPrimaryButtonLink,
+        heroSecondaryButtonText,
+        heroSecondaryButtonLink,
+
+        introTitle,
+        introText,
+        introImage,
+
+        directionsSectionTitle,
+        directions[]{
+          _key,
+          title,
+          body
+        },
+
+        valuesSectionTitle,
+        values[]{
+          _key,
+          icon,
+          title,
+          body
+        },
+
+        partnershipTitle,
+        partnershipText,
+        partnershipButtonText,
+        partnershipButtonLink
+      }`)
+      .then((data) => setPage(data || null))
+      .catch(console.error);
   }, []);
 
-  const introBlocks = homeData?.introBlocks || [];
-  const featuredNews = homeData?.featuredNews || null;
-  const sidebarCards = homeData?.sidebarCards || [];
+  if (!page) return null;
 
-  const heroTitle = getLocalizedValue(homeData?.heroTitle, lang);
-  const heroSubtitle = getLocalizedValue(homeData?.heroSubtitle, lang);
-  const heroImage = homeData?.heroImage
-    ? urlFor(homeData.heroImage).width(1600).url()
-    : null;
-
-  const featuredNewsLabel = getLocalizedValue(homeData?.featuredNewsLabel, lang);
-  const newsletterTitle = getLocalizedValue(homeData?.newsletterTitle, lang);
-  const newsletterText = getLocalizedValue(homeData?.newsletterText, lang);
-  const newsletterButton = getLocalizedValue(homeData?.newsletterButton, lang);
-
-  const featuredNewsTitle = getLocalizedValue(featuredNews?.title, lang);
-  const featuredNewsExcerpt = getLocalizedValue(featuredNews?.excerpt, lang);
-
-  const featuredImage = featuredNews?.mainImage || featuredNews?.image || null;
-
-  const featuredHref =
-    featuredNews?.slug?.current ? `/news/${featuredNews.slug.current}` : "#";
-
-  if (loading) {
-    return (
-      <main className="home">
-        <HeroSection
-          title={heroTitle}
-          subtitle={heroSubtitle}
-          image={heroImage}
-        />
-        <section className="content">
-          <p>{uiText.loading}</p>
-        </section>
-      </main>
-    );
-  }
+  const introImage = page.introImage
+    ? urlFor(page.introImage).width(1200).height(900).url()
+    : placeholderImage;
 
   return (
-    <main className="home">
-      <HeroSection
-        title={heroTitle}
-        subtitle={heroSubtitle}
-        image={heroImage}
-      />
+    <main className="home-page">
+      <header className="home-hero">
+        <div className="home-container home-hero-inner">
+          <div className="home-hero-text">
+            <h1>{getLocalizedValue(page.heroTitle, lang)}</h1>
 
-      <section className="content">
-        {introBlocks.map((block, index) => (
-          <GridSection
-            key={index}
-            title={getLocalizedValue(block.title, lang)}
-            image={
-              block.image
-                ? urlFor(block.image).width(1200).url()
-                : placeholderImage
-            }
-            reverse={block.reverse}
-          />
-        ))}
+            {getLocalizedValue(page.heroSubtitle, lang) && (
+              <p>{getLocalizedValue(page.heroSubtitle, lang)}</p>
+            )}
+
+            <div className="home-hero-buttons">
+              {page.heroPrimaryButtonLink && (
+                <a
+                  href={page.heroPrimaryButtonLink}
+                  className="home-btn home-btn-primary"
+                >
+                  {getLocalizedValue(page.heroPrimaryButtonText, lang)}
+                </a>
+              )}
+
+              {page.heroSecondaryButtonLink && (
+                <a
+                  href={page.heroSecondaryButtonLink}
+                  className="home-btn home-btn-secondary"
+                >
+                  {getLocalizedValue(page.heroSecondaryButtonText, lang)}
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section className="home-section">
+        <div className="home-container home-intro-grid">
+          <div className="home-intro-text">
+            <h2>{getLocalizedValue(page.introTitle, lang)}</h2>
+            <p>{getLocalizedValue(page.introText, lang)}</p>
+          </div>
+
+          <div className="home-intro-image-wrap">
+            <img
+              src={introImage}
+              alt={getLocalizedValue(page.introTitle, lang) || "Home intro"}
+              className="home-intro-image"
+            />
+          </div>
+        </div>
       </section>
 
-      <div className="new-content-grid">
-        <div className="main-article-content">
-          <article className="news-article">
-            <div className="news-header">
-              <span>{featuredNewsLabel}</span>
+      <section className="home-section">
+        <div className="home-container">
+          <h2 className="home-section-title">
+            {getLocalizedValue(page.directionsSectionTitle, lang)}
+          </h2>
+
+          <div className="home-cards-grid">
+            {page.directions?.map((item, index) => (
+              <div className="home-card" key={item._key || index}>
+                <h3>{getLocalizedValue(item.title, lang)}</h3>
+                <p>{getLocalizedValue(item.body, lang)}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="home-section home-values-section">
+        <div className="home-container">
+          <h2 className="home-section-title">
+            {getLocalizedValue(page.valuesSectionTitle, lang)}
+          </h2>
+
+          <div className="home-values-grid">
+            {page.values?.map((value, index) => (
+              <div className="home-value-card" key={value._key || index}>
+                {value.icon && <span className="home-value-icon">{value.icon}</span>}
+                <h3>{getLocalizedValue(value.title, lang)}</h3>
+                <p>{getLocalizedValue(value.body, lang)}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="home-section">
+        <div className="home-container">
+          <div className="home-cta-card">
+            <div>
+              <h2>{getLocalizedValue(page.partnershipTitle, lang)}</h2>
+              <p>{getLocalizedValue(page.partnershipText, lang)}</p>
             </div>
 
-            <h2>{featuredNewsTitle}</h2>
-
-            <a href={featuredHref} className="image-wrapper">
-              <img
-                src={
-                  featuredImage
-                    ? urlFor(featuredImage).width(1400).url()
-                    : placeholderImage
-                }
-                alt={featuredNewsTitle || uiText.imageAlt}
-              />
-              <span className="lu-tag">LU</span>
-            </a>
-
-            {featuredNewsExcerpt && (
-              <div className="news-footer">
-                <span>{featuredNewsExcerpt}</span>
-              </div>
+            {page.partnershipButtonLink && (
+              <a
+                href={page.partnershipButtonLink}
+                className="home-btn home-btn-primary"
+              >
+                {getLocalizedValue(page.partnershipButtonText, lang)}
+              </a>
             )}
-          </article>
+          </div>
         </div>
-
-        <aside className="right-sidebar">
-          {sidebarCards.map((card, index) => {
-            const cardTitle = getLocalizedValue(card.title, lang);
-            const cardSubtitle = getLocalizedValue(card.subtitle, lang);
-
-            return (
-              <div className="sidebar-card" key={index}>
-                <a href={card.url || "#"}>
-                  {card.image ? (
-                    <img
-                      src={urlFor(card.image).width(800).url()}
-                      alt={cardTitle || uiText.imageAlt}
-                      className="sidebar-card-image"
-                    />
-                  ) : (
-                    <div className="image-placeholder"></div>
-                  )}
-                </a>
-
-                <h3>{cardTitle}</h3>
-                {cardSubtitle && <p>{cardSubtitle}</p>}
-              </div>
-            );
-          })}
-        </aside>
-      </div>
-
-      {(newsletterTitle || newsletterText || newsletterButton) && (
-        <section className="newsletter-section">
-          {newsletterTitle && <h2>{newsletterTitle}</h2>}
-          {newsletterText && <p>{newsletterText}</p>}
-          {newsletterButton && (
-            <button type="button" className="newsletter-button">
-              {newsletterButton}
-            </button>
-          )}
-        </section>
-      )}
+      </section>
     </main>
   );
-}
+};
 
 export default Home;

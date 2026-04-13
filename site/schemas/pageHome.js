@@ -1,53 +1,80 @@
 export default {
-  name: 'pageHome',
+  name: "pageHome",
   title: 'Главная страница',
-  type: 'document',
+  type: "document",
   fields: [
     {
-      name: 'heroTitle',
-      title: 'Заголовок hero-блока',
-      type: 'localeString',
+      name: "heroTitle",
+      title: "Заголовок hero-блока",
+      type: "localeString",
     },
     {
-      name: 'heroSubtitle',
-      title: 'Подзаголовок hero-блока',
-      type: 'localeText',
+      name: "heroSubtitle",
+      title: "Подзаголовок hero-блока",
+      type: "localeText",
     },
     {
-      name: 'heroImage',
-      title: 'Изображение hero-блока',
-      type: 'image',
+      name: "heroPrimaryButtonText",
+      title: "Текст главной кнопки",
+      type: "localeString",
+    },
+    {
+      name: "heroPrimaryButtonLink",
+      title: "Ссылка главной кнопки",
+      type: "string",
+      description: 'Например: /about или /projects',
+    },
+    {
+      name: "heroSecondaryButtonText",
+      title: "Текст второй кнопки",
+      type: "localeString",
+    },
+    {
+      name: "heroSecondaryButtonLink",
+      title: "Ссылка второй кнопки",
+      type: "string",
+      description: 'Например: /partnership',
+    },
+
+    {
+      name: "introTitle",
+      title: "Заголовок блока о нас",
+      type: "localeString",
+    },
+    {
+      name: "introText",
+      title: "Текст блока о нас",
+      type: "localeText",
+    },
+    {
+      name: "introImage",
+      title: "Изображение блока о нас",
+      type: "image",
       options: { hotspot: true },
     },
 
     {
-      name: 'introBlocks',
-      title: 'Верхние блоки (GridSection)',
-      type: 'array',
+      name: "directionsSectionTitle",
+      title: "Заголовок секции направлений",
+      type: "localeString",
+    },
+    {
+      name: "directions",
+      title: "Направления",
+      type: "array",
       of: [
         {
-          type: 'object',
+          type: "object",
           fields: [
             {
-              name: 'title',
-              title: 'Заголовок',
-              type: 'object',
-              fields: [
-                { name: 'ru', title: 'Русский', type: 'string' },
-                { name: 'kk', title: 'Қазақша', type: 'string' },
-                { name: 'en', title: 'English', type: 'string' },
-              ],
+              name: "title",
+              title: "Заголовок",
+              type: "localeString",
             },
             {
-              name: 'image',
-              title: 'Картинка',
-              type: 'image',
-              options: { hotspot: true },
-            },
-            {
-              name: 'reverse',
-              title: 'Развернуть блок (картинка справа)',
-              type: 'boolean',
+              name: "body",
+              title: "Текст",
+              type: "localeText",
             },
           ],
         },
@@ -55,60 +82,32 @@ export default {
     },
 
     {
-      name: 'featuredNewsLabel',
-      title: 'Лейбл над новостью',
-      type: 'object',
-      fields: [
-        { name: 'ru', title: 'Русский', type: 'string' },
-        { name: 'kk', title: 'Қазақша', type: 'string' },
-        { name: 'en', title: 'English', type: 'string' },
-      ],
+      name: "valuesSectionTitle",
+      title: "Заголовок секции ценностей",
+      type: "localeString",
     },
     {
-      name: 'featuredNews',
-      title: 'Новость на главной',
-      type: 'reference',
-      to: [{ type: 'newsItem' }],
-    },
-
-    {
-      name: 'sidebarCards',
-      title: 'Карточки справа',
-      type: 'array',
+      name: "values",
+      title: "Ценности",
+      type: "array",
       of: [
         {
-          type: 'object',
+          type: "object",
           fields: [
             {
-              name: 'title',
-              title: 'Заголовок',
-              type: 'object',
-              fields: [
-                { name: 'ru', title: 'Русский', type: 'string' },
-                { name: 'kk', title: 'Қазақша', type: 'string' },
-                { name: 'en', title: 'English', type: 'string' },
-              ],
+              name: "icon",
+              title: "Иконка (эмодзи или короткий текст)",
+              type: "string",
             },
             {
-              name: 'subtitle',
-              title: 'Подпись (опционально)',
-              type: 'object',
-              fields: [
-                { name: 'ru', title: 'Русский', type: 'string' },
-                { name: 'kk', title: 'Қазақша', type: 'string' },
-                { name: 'en', title: 'English', type: 'string' },
-              ],
+              name: "title",
+              title: "Заголовок",
+              type: "localeString",
             },
             {
-              name: 'url',
-              title: 'Ссылка (опционально)',
-              type: 'url',
-            },
-            {
-              name: 'image',
-              title: 'Картинка',
-              type: 'image',
-              options: { hotspot: true },
+              name: "body",
+              title: "Текст",
+              type: "localeText",
             },
           ],
         },
@@ -116,42 +115,25 @@ export default {
     },
 
     {
-      name: 'newsletterTitle',
-      title: 'Заголовок блока Newsletter',
-      type: 'object',
-      fields: [
-        { name: 'ru', title: 'Русский', type: 'string' },
-        { name: 'kk', title: 'Қазақша', type: 'string' },
-        { name: 'en', title: 'English', type: 'string' },
-      ],
+      name: "partnershipTitle",
+      title: "Заголовок CTA-блока",
+      type: "localeString",
     },
     {
-      name: 'newsletterText',
-      title: 'Текст блока Newsletter',
-      type: 'object',
-      fields: [
-        { name: 'ru', title: 'Русский', type: 'text' },
-        { name: 'kk', title: 'Қазақша', type: 'text' },
-        { name: 'en', title: 'English', type: 'text' },
-      ],
+      name: "partnershipText",
+      title: "Текст CTA-блока",
+      type: "localeText",
     },
     {
-      name: 'newsletterButton',
-      title: 'Текст кнопки Newsletter',
-      type: 'object',
-      fields: [
-        { name: 'ru', title: 'Русский', type: 'string' },
-        { name: 'kk', title: 'Қазақша', type: 'string' },
-        { name: 'en', title: 'English', type: 'string' },
-      ],
+      name: "partnershipButtonText",
+      title: "Текст кнопки CTA",
+      type: "localeString",
+    },
+    {
+      name: "partnershipButtonLink",
+      title: "Ссылка кнопки CTA",
+      type: "string",
+      description: 'Например: /partnership',
     },
   ],
-
-  preview: {
-    prepare() {
-      return {
-        title: 'Главная страница',
-      };
-    },
-  },
 };
