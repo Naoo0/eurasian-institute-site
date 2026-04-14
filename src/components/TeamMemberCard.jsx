@@ -2,7 +2,30 @@
 import { FaEnvelope, FaLink } from 'react-icons/fa';
 import '../styles/Team.css';
 
-function TeamMemberCard({ member }) {
+function TeamMemberCard({ member, lang = 'ru' }) {
+  const translations = {
+    ru: {
+      interests: 'Научные интересы',
+      metrics: 'Идентификаторы и метрики',
+      publications: 'Основные публикации',
+      contactEmail: 'Контактная почта',
+    },
+    kz: {
+      interests: 'Ғылыми қызығушылықтары',
+      metrics: 'Идентификаторлар мен көрсеткіштер',
+      publications: 'Негізгі жарияланымдар',
+      contactEmail: 'Байланыс поштасы',
+    },
+    en: {
+      interests: 'Research Interests',
+      metrics: 'Identifiers and Metrics',
+      publications: 'Key Publications',
+      contactEmail: 'Contact Email',
+    },
+  };
+
+  const t = translations[lang] || translations.ru;
+
   const hasPublications = member.publications && member.publications.length > 0;
   const hasProfiles = member.profiles && member.profiles.length > 0;
 
@@ -18,7 +41,7 @@ function TeamMemberCard({ member }) {
   return (
     <div className="team-member-card">
       <div className="team-member-photo">
-        <img src={member.photo} alt={member.name} />
+        <img src={member.photo} alt={member.name || 'Team member'} />
       </div>
 
       <div className="team-member-info">
@@ -32,18 +55,16 @@ function TeamMemberCard({ member }) {
           </p>
         )}
 
-
-
         {member.interests && (
           <div className="info-block">
-            <h4>Научные интересы</h4>
+            <h4>{t.interests}</h4>
             <p>{member.interests}</p>
           </div>
         )}
 
         {hasMetrics && (
           <div className="info-block">
-            <h4>Идентификаторы и метрики</h4>
+            <h4>{t.metrics}</h4>
             <ul className="metrics-list">
               {member.scopusId && (
                 <li>
@@ -96,18 +117,14 @@ function TeamMemberCard({ member }) {
                 </li>
               )}
 
-              {member.hIndex && (
-                <li>
-                  H-index: {member.hIndex}
-                </li>
-              )}
+              {member.hIndex && <li>H-index: {member.hIndex}</li>}
             </ul>
           </div>
         )}
 
         {hasPublications && (
           <div className="info-block">
-            <h4>Основные публикации</h4>
+            <h4>{t.publications}</h4>
             <ul className="publications-list">
               {member.publications.map((pub, index) => (
                 <li key={index}>
@@ -134,7 +151,7 @@ function TeamMemberCard({ member }) {
               href={`mailto:${member.email}`}
               className="contact-link"
             >
-              <FaEnvelope /> Контактная почта
+              <FaEnvelope /> {t.contactEmail}
             </a>
           )}
 

@@ -62,11 +62,14 @@ function Team({ lang = 'ru' }) {
             key={m._id}
             member={{
               ...m,
+              name: getLocalizedValue(m.name, lang),
               position: getLocalizedValue(m.position, lang),
               degree: getLocalizedValue(m.degree, lang),
               bio: getLocalizedValue(m.bio, lang),
               interests: getLocalizedValue(m.interests, lang),
-              photo: m.photo ? urlFor(m.photo).width(500).height(500).url() : null,
+              photo: m.photo
+                ? urlFor(m.photo).width(700).height(700).fit('crop').url()
+                : null,
             }}
             lang={lang}
           />
