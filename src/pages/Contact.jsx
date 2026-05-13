@@ -112,7 +112,7 @@ const Contact = ({ lang = "ru" }) => {
         <motion.div className="contact-card" variants={cardVariants}>
           <h2>{t.emailTitle}</h2>
           <p>
-            <a href="mailto:info@eurasian.institute">info@eurasian.institute</a>
+            <a href="mailto:info@eurasian.institute">eurasianiis@gmai.com</a>
           </p>
         </motion.div>
 
